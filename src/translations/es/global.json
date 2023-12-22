@@ -1,0 +1,63 @@
+{
+  "header": {
+    "home": "Principal",
+    "for-you": "Para tí",
+    "following": "Seguidos",
+    "connect": "Conectar",
+    "messages": "Mensajes"
+  },
+  "navbar": {
+    "home": "Principal",
+    "explore": "Explorar",
+    "message": "Mensajes",
+    "profile": "Perfil"
+  },
+  "suggestion": {
+    "who-to-follow": "Recomendaciones",
+    "no-recommendations": "¡Sigue a algunos usuarios para obtener recomendaciones!",
+    "show-more": "Mostrar más"
+  },
+  "buttons": {
+    "follow": "Seguir",
+    "following": "Siguiendo",
+    "register": "Registrar",
+    "login": "Iniciar Sesión",
+    "delete": "Eliminar",
+    "unfollow": "Dejar de seguir",
+    "cancel": "Cancelar",
+    "logout": "Cerrar sesión"
+  },
+  "placeholder": {
+    "new-chat": "Comenzar un nuevo chat",
+    "search": "Buscar en twitter",
+    "tweet": "¡¿Que está pasando?!",
+    "send": "Envíar un nuevo mensaje",
+    "comment": "Escribe tu respuesta"
+  },
+  "error": {
+    "login": "Lo siento, tu nombre de usuario o contraseña es incorrecto. Por favor, inténtalo de nuevo."
+  },
+  "input-params": {
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "email": "Email",
+    "name": "Nombre",
+    "confirm-password": "Confirmar constraseña"
+  },
+  "modal-title": {
+    "delete-post": "Eliminar tweet",
+    "unfollow": "¿Dejar de seguir",
+    "delete-account": "¿Estás seguro de que quieres eliminar tu cuenta?",
+    "logout": "¿Quieres cerrar sesión en Twitter?"
+  },
+  "modal-content": {
+    "delete-post": "Esto no se puede deshacer y se eliminará de tu perfil, del feed de todas las cuentas que te sigan y de los resultados de búsqueda de Twitter.",
+    "unfollow": "A partir de ahora, los Tweets de esa cuenta ya no aparecerán en tu feed principal. Aún podrás ver su perfil, a menos que sus Tweets estén protegidos.",
+    "delete-account": "Esto no se puede deshacer y se eliminará de tu perfil.",
+    "logout": "Siempre puedes volver a iniciar sesión en cualquier momento."
+  },
+  "title": {
+    "login": "Ingresa tu correo electrónico o @nombre_de_usuario.",
+    "register": "Crea tu cuenta"
+  }
+}

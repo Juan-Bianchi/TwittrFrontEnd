@@ -1,0 +1,61 @@
+{
+  "header": {
+    "home": "Home",
+    "for-you": "For You",
+    "following": "Following",
+    "connect": "Connect",
+    "messages": "Messages"
+  },
+  "navbar": {
+    "home": "Home",
+    "profile": "Profile"
+  },
+  "suggestion": {
+    "who-to-follow": "Who to follow",
+    "no-recommendations": "Follow some users to get recommendations!",
+    "show-more": "Show more"
+  },
+  "buttons": {
+    "follow": "Follow",
+    "following": "Following",
+    "register": "Register",
+    "login": "Login",
+    "delete": "Delete",
+    "unfollow": "Unfollow",
+    "cancel": "Cancel",
+    "logout": "Log out"
+  },
+  "placeholder": {
+    "new-chat": "Start a new chat",
+    "search": "Search Twitter",
+    "tweet": "What's happening?!",
+    "send": "Send a new message",
+    "comment" : "Tweet your reply"
+  },
+  "error": {
+    "login": "Sorry, your username or password was incorrect. Please try again."
+  },
+  "input-params": {
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "name": "Name",
+    "confirm-password": "Confirm password"
+  },
+  "modal-title": {
+    "delete-post": "Delete tweet",
+    "unfollow": "Unfollow",
+    "delete-account": "Sure you want to delete your account?",
+    "logout": "Log out of Twitter?"
+  },
+  "modal-content": {
+    "delete-post": "This can’t be undone and it will be removed from your profile. the timeline of any accounts that follow you, and from Twitter search results.",
+    "unfollow": "Their Tweets will no longer show up in your home timeline. You can still view their profile, unless their Tweets are protected.",
+    "delete-account": "This can’t be undone and it will be removed from your profile. ?",
+    "logout": "You can always log back in at any time."
+  },
+  "title": {
+    "login": "Enter your email or username",
+    "register": "Create your account"
+  }
+}
