@@ -25,7 +25,7 @@ const FollowUserBox = ({
   const { t } = useTranslation();
 
   const [isFollowing, setIsFollowing] = useState(
-    user.following.some((f) => f.id === id)
+    user.follows.some((f) => f.id === id)
   );
 
   const handleFollow = async () => {

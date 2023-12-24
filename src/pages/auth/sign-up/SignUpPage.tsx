@@ -39,7 +39,7 @@ const SignUpPage = () => {
 
   return (
     <AuthWrapper>
-      <div className={"border"}>
+      <form onSubmit={e => e.preventDefault()}  className={"border"}>
         <div className={"container"}>
           <div className={"header"}>
             <img src={logo} alt="Twitter Logo" />
@@ -63,6 +63,7 @@ const SignUpPage = () => {
             <LabeledInput
               required
               placeholder={"Enter email..."}
+              autocomplete="email"
               title={t("input-params.email")}
               error={error}
               onChange={handleChange("email")}
@@ -71,6 +72,7 @@ const SignUpPage = () => {
               type="password"
               required
               placeholder={"Enter password..."}
+              autocomplete="current-password"
               title={t("input-params.password")}
               error={error}
               onChange={handleChange("password")}
@@ -99,7 +101,7 @@ const SignUpPage = () => {
             />
           </div>
         </div>
-      </div>
+      </form>
     </AuthWrapper>
   );
 };

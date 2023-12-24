@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHttpRequestService } from "../service/HttpRequestService";
 import { setLength, updateFeed } from "../redux/user";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { Post } from "../service";
 
 export const useGetFeed = () => {
   const [loading, setLoading] = useState(false);
@@ -17,8 +18,8 @@ export const useGetFeed = () => {
     try {
       setLoading(true);
       setError(false);
-      service.getPosts(query).then((res) => {
-        const updatedPosts = Array.from(new Set([...posts, ...res]));
+      service.getPosts(query).then((res: Post[]) => {
+        const updatedPosts: Post[] = Array.from(new Set([...posts, ...res]))
         dispatch(updateFeed(updatedPosts));
         dispatch(setLength(updatedPosts.length));
         setLoading(false);

@@ -7,6 +7,7 @@ interface InputWithLabelProps {
   type?: "password" | "text";
   title: string;
   placeholder: string;
+  autocomplete?: string;
   required: boolean;
   error?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -17,6 +18,7 @@ const LabeledInput = ({
   placeholder,
   required,
   error,
+  autocomplete,
   onChange,
   type = "text",
 }: InputWithLabelProps) => {
@@ -41,6 +43,7 @@ const LabeledInput = ({
     <StyledInputContainer
       className={`${error ? "error" : ""}`}
       onClick={handleClick}
+      onSubmit={e => e.preventDefault()}
     >
       <StyledInputTitle
         className={`${focus ? "active-label" : ""} ${error ? "error" : ""}`}

@@ -36,8 +36,9 @@ const SignInPage = () => {
           <div className={"input-container"}>
             <LabeledInput
               required
-              placeholder={"Enter user..."}
-              title={t("input-params.username")}
+              placeholder={"Enter email..."}
+              autocomplete="email"
+              title={t("input-params.email")}
               error={error}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -45,6 +46,7 @@ const SignInPage = () => {
               type="password"
               required
               placeholder={"Enter password..."}
+              autocomplete="current-password"
               title={t("input-params.password")}
               error={error}
               onChange={(e) => setPassword(e.target.value)}

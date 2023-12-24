@@ -11,11 +11,7 @@ const ContentContainer = () => {
     <StyledContentContainer>
       <Header />
       <StyledFeedContainer>
-        <StyledContainer
-          width={"100%"}
-          padding={"16px"}
-          borderBottom={"1px solid #ebeef0"}
-        >
+        <StyledContainer width={"100%"} padding={"16px"} borderBottom={"1px solid #ebeef0"}>
           <TweetBox />
         </StyledContainer>
         <StyledContainer minHeight={"66vh"} width={"100%"}>

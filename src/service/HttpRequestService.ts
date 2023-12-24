@@ -1,14 +1,34 @@
 import type { PostData, SingInData, SingUpData } from "./index";
 import axios from "axios";
 import { S3Service } from "./S3Service";
+import Cookies from "universal-cookie";
 
 const url =
   process.env.REACT_APP_API_URL || "https://twitter-ieea.onrender.com/api";
 
+const cookie = new Cookies();
+
 const httpRequestService = {
+
+  routingAuth: async () => {
+    try {
+      const res = await axios.post(`${url}/auth/validate`, null, {
+        headers: {
+          Authorization: cookie.get('twittrToken'),
+        },
+      })
+      return res.status === 200 ? { isValidToken: true } : { isValidToken: false }
+    }
+    catch(e) {
+      return {
+        isValidToken: false
+      }
+    }
+  },
   signUp: async (data: Partial<SingUpData>) => {
     const res = await axios.post(`${url}/auth/signup`, data);
     if (res.status === 201) {
+      cookie.set('twittrToken', `Bearer ${res.data.token}`, {path: '/', maxAge: 3600})
       localStorage.setItem("token", `Bearer ${res.data.token}`);
       return true;
     }
@@ -16,14 +36,14 @@ const httpRequestService = {
   signIn: async (data: SingInData) => {
     const res = await axios.post(`${url}/auth/login`, data);
     if (res.status === 200) {
-      localStorage.setItem("token", `Bearer ${res.data.token}`);
+      cookie.set('twittrToken', `Bearer ${res.data.token}`, {path: '/', maxAge: 3600})
       return true;
     }
   },
   createPost: async (data: PostData) => {
     const res = await axios.post(`${url}/post`, data, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 201) {
@@ -38,7 +58,7 @@ const httpRequestService = {
   getPaginatedPosts: async (limit: number, after: string, query: string) => {
     const res = await axios.get(`${url}/post/${query}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
       params: {
         limit,
@@ -52,7 +72,7 @@ const httpRequestService = {
   getPosts: async (query: string) => {
     const res = await axios.get(`${url}/post/${query}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 200) {
@@ -62,7 +82,7 @@ const httpRequestService = {
   getRecommendedUsers: async (limit: number, skip: number) => {
     const res = await axios.get(`${url}/user`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
       params: {
         limit,
@@ -76,7 +96,7 @@ const httpRequestService = {
   me: async () => {
     const res = await axios.get(`${url}/user/me`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 200) {
@@ -86,7 +106,7 @@ const httpRequestService = {
   getPostById: async (id: string) => {
     const res = await axios.get(`${url}/post/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 200) {
@@ -99,7 +119,7 @@ const httpRequestService = {
       { type: reaction },
       {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: cookie.get('twittrToken'),
         },
       }
     );
@@ -110,7 +130,7 @@ const httpRequestService = {
   deleteReaction: async (reactionId: string) => {
     const res = await axios.delete(`${url}/reaction/${reactionId}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 200) {
@@ -123,7 +143,7 @@ const httpRequestService = {
       {},
       {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: cookie.get('twittrToken'),
         },
       }
     );
@@ -134,7 +154,7 @@ const httpRequestService = {
   unfollowUser: async (userId: string) => {
     const res = await axios.delete(`${url}/follow/${userId}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 200) {
@@ -147,7 +167,7 @@ const httpRequestService = {
 
       const response = await axios.get(`${url}/user/search`, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: cookie.get('twittrToken'),
         },
         params: {
           username,
@@ -168,7 +188,7 @@ const httpRequestService = {
   getProfile: async (id: string) => {
     const res = await axios.get(`${url}/user/profile/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 200) {
@@ -182,7 +202,7 @@ const httpRequestService = {
   ) => {
     const res = await axios.get(`${url}/post/by_user/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
       params: {
         limit,
@@ -197,7 +217,7 @@ const httpRequestService = {
   getPostsFromProfile: async (id: string) => {
     const res = await axios.get(`${url}/post/by_user/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
 
@@ -209,7 +229,7 @@ const httpRequestService = {
   isLogged: async () => {
     const res = await axios.get(`${url}/user/me`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     return res.status === 200;
@@ -218,7 +238,7 @@ const httpRequestService = {
   getProfileView: async (id: string) => {
     const res = await axios.get(`${url}/user/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
 
@@ -228,9 +248,9 @@ const httpRequestService = {
   },
 
   deleteProfile: async () => {
-    const res = await axios.delete(`${url}/user/me`, {
+    const res = await axios.delete(`${url}/user/`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
 
@@ -242,7 +262,7 @@ const httpRequestService = {
   getChats: async () => {
     const res = await axios.get(`${url}/chat`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
 
@@ -254,7 +274,7 @@ const httpRequestService = {
   getMutualFollows: async () => {
     const res = await axios.get(`${url}/follow/mutual`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
 
@@ -271,7 +291,7 @@ const httpRequestService = {
       },
       {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: cookie.get('twittrToken'),
         },
       }
     );
@@ -284,7 +304,7 @@ const httpRequestService = {
   getChat: async (id: string) => {
     const res = await axios.get(`${url}/chat/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
 
@@ -296,7 +316,7 @@ const httpRequestService = {
   deletePost: async (id: string) => {
     await axios.delete(`${url}/post/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
   },
@@ -308,7 +328,7 @@ const httpRequestService = {
   ) => {
     const res = await axios.get(`${url}/post/comment/by_post/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
       params: {
         limit,
@@ -322,7 +342,7 @@ const httpRequestService = {
   getCommentsByPostId: async (id: string) => {
     const res = await axios.get(`${url}/post/comment/by_post/${id}`, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: cookie.get('twittrToken'),
       },
     });
     if (res.status === 200) {

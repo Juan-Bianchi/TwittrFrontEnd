@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledInputContainer = styled.div`
+export const StyledInputContainer = styled.form`
   border-radius: 8px;
   padding: 8px;
   border: 1px solid ${(props) => props.theme.colors.outline};

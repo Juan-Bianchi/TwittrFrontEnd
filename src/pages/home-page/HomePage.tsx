@@ -7,6 +7,7 @@ import { SearchBar } from "../../components/search-bar/SearchBar";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { StyledUserSuggestionContainer } from "./UserSeuggestionContainer";
+import { User } from "../../service";
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const HomePage = () => {
 
   const handleSetUser = async () => {
     try {
-      const user = await service.me();
+      const user: User = await service.me();
       const data = await service.getPosts(query);
       dispatch(setUser(user));
       dispatch(updateFeed(data));

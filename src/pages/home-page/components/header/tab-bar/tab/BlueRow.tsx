@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledBlueRow = styled.line`
+export const StyledBlueRow = styled.div`
   max-width: 70px;
   width: 100%;
   height: 2px;

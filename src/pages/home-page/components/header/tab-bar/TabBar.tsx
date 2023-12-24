@@ -32,7 +32,7 @@ const TabBar = () => {
         <Tab
           active={!activeFirstPage}
           text={t("header.following")}
-          onClick={() => handleClick(false, "following")}
+          onClick={() => handleClick(false, "?limit=100")}
         />
       </StyledTabBarContainer>
     </>

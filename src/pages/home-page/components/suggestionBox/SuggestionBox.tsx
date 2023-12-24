@@ -12,7 +12,7 @@ const SuggestionBox = () => {
 
   useEffect(() => {
     try {
-      httpService.getRecommendedUsers(6, 0).then((res) => {
+      httpService.getRecommendedUsers(6, 0).then((res): void => {
         setUsers(res);
       });
     } catch (e) {

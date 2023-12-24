@@ -24,11 +24,12 @@
     "react-i18next": "^13.0.3",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.12.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
     "socket.io": "^4.7.1",
     "socket.io-client": "^4.7.1",
     "styled-components": "^5.3.10",
+    "universal-cookie": "^6.1.1",
     "validator": "^13.9.0",
     "web-vitals": "^2.1.4"
   },
@@ -61,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/jest": "^29.5.2",
     "@types/luxon": "^3.3.0",
     "@types/validator": "^13.7.17",
