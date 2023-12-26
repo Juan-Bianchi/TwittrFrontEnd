@@ -11,33 +11,41 @@ import { ButtonType } from "../button/StyledButton";
 import { StyledTweetBoxContainer } from "./TweetBoxContainer";
 import { StyledContainer } from "../common/Container";
 import { StyledButtonContainer } from "./ButtonContainer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { useGetProfilePosts } from "../../hooks/useGetProfilePosts";
+import { Post, PostData } from "../../service";
+import { useAppSelector } from "../../redux/hooks";
 
-const TweetBox = (props) => {
+interface TweetBoxProps {
+  parentId?: string;
+  close?: Function;
+  mobile?: boolean;
+  borderless?: boolean
+}
+
+const TweetBox = (props: TweetBoxProps) => {
   const { parentId, close, mobile } = props;
-  const [content, setContent] = useState("");
-  const [images, setImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
+  const [content, setContent] = useState<string>("");
+  const [images, setImages] = useState<File[]>([]);
+  const [imagesPreview, setImagesPreview] = useState<string[]>([]);
   const location = useLocation()
 
-  const { user, length, query } = useSelector((state) => state.user);
+  const { user, length, query } = useAppSelector((state) => state.user);
   const httpService = useHttpRequestService();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
   const handleSubmit = async () => {
     try {
       if(parentId){
-        const postData = !images.length? {postCommentedId: parentId, content: content} : {postCommentedId: parentId, content: content, images: images}
+        const postData: PostData = !images.length? {postCommentedId: parentId, content: content} : {postCommentedId: parentId, content: content, images: images}
         await httpService.createComment(postData)
       }
       else {
-        const postData = !images.length? {content: content} : {content: content, images: images}
+        const postData: PostData = !images.length? {content: content} : {content: content, images: images}
         await httpService.createPost(postData)
       }
       setContent("");
@@ -45,14 +53,14 @@ const TweetBox = (props) => {
       setImagesPreview([]);
       dispatch(setLength(length + 1));
       if(location.pathname === '/' ){
-        const homePosts = await httpService.getPosts(query).catch((e) => {
+        const homePosts: Post[] = await httpService.getPosts(query).catch((e) => {
           console.log(e);
         });
         dispatch(updateFeed(homePosts));
       }
       else {
-        const profilePosts = (await httpService.getPostsFromProfile(user.id)).filter(
-              (post) => post.authorId === user.id);
+        const profilePosts: Post[] = (await httpService.getPostsFromProfile(user.id)).filter(
+              (post: Post) => post.authorId === user.id);
         dispatch(updateFeed(profilePosts));
       }
       close && close();
@@ -61,14 +69,14 @@ const TweetBox = (props) => {
     }
   };
 
-  const handleRemoveImage = (index) => {
-    const newImages = images.filter((i, idx) => idx !== index);
-    const newImagesPreview = newImages.map((i) => URL.createObjectURL(i));
+  const handleRemoveImage = (index: number) => {
+    const newImages: File[] = images.filter((i, idx) => idx !== index);
+    const newImagesPreview: string[] = newImages.map((i) => URL.createObjectURL(i));
     setImages(newImages);
     setImagesPreview(newImagesPreview);
   };
 
-  const handleAddImage = (newImages) => {
+  const handleAddImage = (newImages: File[]) => {
     setImages(newImages);
     const newImagesPreview = newImages.map((i) => URL.createObjectURL(i));
     setImagesPreview(newImagesPreview);
@@ -82,7 +90,7 @@ const TweetBox = (props) => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <BackArrowIcon onClick={close} />
+          <BackArrowIcon onClick={()=>close} />
           <Button
             text={"Tweet"}
             buttonType={ButtonType.DEFAULT}
@@ -94,7 +102,7 @@ const TweetBox = (props) => {
       )}
       <StyledContainer style={{ width: "100%" }}>
         <TweetInput
-          onChange={handleChange}
+          onChange={(e) => handleChange(e)}
           maxLength={240}
           placeholder={t("placeholder.tweet")}
           value={content}

@@ -23,7 +23,7 @@ The objective of this feature is to add logic to protect certain routes that req
 
 **Why is it important?** We are sure that you will be working on a similar feature in your next project! The main reason for this is to prevent some users from accessing private routes or pages that contain sensitive data.
 
-### 2. Transform Javascript components to Typescript components
+### :rocket: 2. Transform Javascript components to Typescript components
 
 The objective of this task is to read and understand how some components work and transform them into Typescript. Remember that you can type almost everything.
 
