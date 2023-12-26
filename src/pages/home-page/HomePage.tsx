@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SuggestionBox from "./components/suggestionBox/SuggestionBox";
 import ContentContainer from "./components/contentContainer/ContentContainer";
 import { setUser, updateFeed } from "../../redux/user";
@@ -8,13 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { StyledUserSuggestionContainer } from "./UserSeuggestionContainer";
 import { User } from "../../service";
-import { use } from "i18next";
+import Loader from "../../components/loader/Loader";
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const query = useAppSelector((state) => state.user.query);
   const service = useHttpRequestService();
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSetUser = async () => {
     try {
@@ -22,6 +23,7 @@ const HomePage = () => {
       const data = await service.getPosts(query);
       dispatch(setUser(user));
       dispatch(updateFeed(data));
+      setIsLoading(false)
     } catch (e) {
       navigate("/sign-in");
     }
@@ -33,11 +35,16 @@ const HomePage = () => {
 
   return (
     <>
-      <ContentContainer />
-      <StyledUserSuggestionContainer>
-        <SearchBar />
-        <SuggestionBox />
-      </StyledUserSuggestionContainer>
+      {
+        isLoading? <Loader />
+        : <>
+            <ContentContainer />
+            <StyledUserSuggestionContainer>
+              <SearchBar />
+              <SuggestionBox />
+            </StyledUserSuggestionContainer>      
+         </>
+      }
     </>
   );
 };

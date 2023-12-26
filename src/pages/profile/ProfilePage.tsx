@@ -3,7 +3,7 @@ import ProfileInfo from "./ProfileInfo";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import { useTranslation } from "react-i18next";
-import { User } from "../../service";
+import { Follow, User } from "../../service";
 import { ButtonType } from "../../components/button/StyledButton";
 import { useAppSelector } from "../../redux/hooks";
 import { useHttpRequestService } from "../../service/HttpRequestService";
@@ -93,7 +93,7 @@ const ProfilePage = () => {
         setProfile(res);
         setFollowing(
           res
-            ? res?.followers.some((follower: User) => follower.id === user.id)
+            ? res?.followers.some((follow: Follow) => follow.followerId === user.id && !follow.deletedAt)
             : false
         );
       })

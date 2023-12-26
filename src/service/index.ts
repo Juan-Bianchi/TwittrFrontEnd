@@ -54,8 +54,8 @@ export interface User {
   profilePicture?: string;
   private: boolean;
   createdAt: string;
-  followers: Author[];
-  follows: Author[];
+  followers: Follow[];
+  follows: Follow[];
   posts: Post[];
 }
 
@@ -72,4 +72,13 @@ export interface ChatDTO {
   id: string;
   users: Author[];
   messages: MessageDTO[];
+}
+
+export interface Follow {
+  id: string;
+  followedId: string;
+  followerId: string;
+  createdAt: Date;
+  deletedAt: Date;
+  updatedAt: Date;
 }

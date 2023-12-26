@@ -21,7 +21,6 @@ const TweetBox = (props) => {
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
   const location = useLocation()
-  const {posts} = useGetProfilePosts()
 
   const { user, length, query } = useSelector((state) => state.user);
   const httpService = useHttpRequestService();
@@ -52,7 +51,9 @@ const TweetBox = (props) => {
         dispatch(updateFeed(homePosts));
       }
       else {
-        dispatch(updateFeed(posts));
+        const profilePosts = (await httpService.getPostsFromProfile(user.id)).filter(
+              (post) => post.authorId === user.id);
+        dispatch(updateFeed(profilePosts));
       }
       close && close();
     } catch (e) {

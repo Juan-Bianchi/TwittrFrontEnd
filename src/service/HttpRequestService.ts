@@ -138,8 +138,8 @@ const httpRequestService = {
     }
   },
   followUser: async (userId: string) => {
-    const res = await axios.post(
-      `${url}/follow/${userId}`,
+    const res = await axios.put(
+      `${url}/follower/follow/${userId}`,
       {},
       {
         headers: {
@@ -152,7 +152,7 @@ const httpRequestService = {
     }
   },
   unfollowUser: async (userId: string) => {
-    const res = await axios.delete(`${url}/follow/${userId}`, {
+    const res = await axios.patch(`${url}/follower/unfollow/${userId}`,{}, {
       headers: {
         Authorization: cookie.get('twittrToken'),
       },
@@ -186,7 +186,7 @@ const httpRequestService = {
   },
 
   getProfile: async (id: string) => {
-    const res = await axios.get(`${url}/user/profile/${id}`, {
+    const res = await axios.get(`${url}/user/${id}`, {
       headers: {
         Authorization: cookie.get('twittrToken'),
       },
