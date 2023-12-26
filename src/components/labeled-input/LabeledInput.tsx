@@ -54,6 +54,7 @@ const LabeledInput = ({
         type={type}
         required={required}
         placeholder={placeholder}
+        autoComplete={autocomplete}
         onFocus={handleFocus}
         onBlur={handleBlur}
         onChange={onChange}

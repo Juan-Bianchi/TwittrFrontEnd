@@ -7,4 +7,5 @@ export const StyledTabBarContainer = styled.div`
   justify-content: center;
   transition: ease-in-out 0.3s;
   width: 100%;
+  cursor: pointer;
 `;

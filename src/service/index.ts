@@ -13,14 +13,14 @@ export interface SingInData {
 
 export interface PostData {
   content: string;
-  parentId?: string;
+  postCommentedId?: string;
   images?: File[];
 }
 
 export interface Post {
   id: string;
   content: string;
-  parentId?: string;
+  postCommentedId?: string;
   images?: string[];
   createdAt: Date;
   authorId: string;

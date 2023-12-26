@@ -8,6 +8,7 @@ interface ReactionProps {
   reacted: boolean;
   reactionFunction: () => void;
   increment: number;
+  isAComment: boolean;
 }
 const Reaction = ({
   img,
@@ -15,6 +16,7 @@ const Reaction = ({
   reacted,
   reactionFunction,
   increment,
+  isAComment,
 }: ReactionProps) => {
   const [reactionCount, setReactionCount] = useState(count);
   const [reactionReacted, setReactionReacted] = useState(reacted);
@@ -22,9 +24,11 @@ const Reaction = ({
   const handleReaction = async () => {
     try {
       await reactionFunction();
-      setReactionCount(
-        reactionReacted ? reactionCount - increment : reactionCount + 1
-      );
+      if(!isAComment){
+        setReactionCount(
+          reactionReacted ? reactionCount - increment : reactionCount + 1
+        );
+      }
       setReactionReacted(!reactionReacted);
     } catch (error) {
       console.log(error);

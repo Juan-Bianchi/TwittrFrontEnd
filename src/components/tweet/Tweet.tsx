@@ -34,7 +34,7 @@ const Tweet = ({ post }: TweetProps) => {
       (r) => r.type === type && r.userId === user.id
     );
     if (reacted) {
-      await service.deleteReaction(reacted.id);
+      await service.deleteReaction(actualPost.id);
     } else {
       await service.createReaction(actualPost.id, type);
     }
@@ -100,6 +100,7 @@ const Tweet = ({ post }: TweetProps) => {
           }
           increment={0}
           reacted={false}
+          isAComment={true}
         />
         <Reaction
           img={IconType.RETWEET}
@@ -107,6 +108,7 @@ const Tweet = ({ post }: TweetProps) => {
           reactionFunction={() => handleReaction("RETWEET")}
           increment={1}
           reacted={hasReactedByType("RETWEET")}
+          isAComment={false}
         />
         <Reaction
           img={IconType.LIKE}
@@ -114,6 +116,7 @@ const Tweet = ({ post }: TweetProps) => {
           reactionFunction={() => handleReaction("LIKE")}
           increment={1}
           reacted={hasReactedByType("LIKE")}
+          isAComment={false}
         />
       </StyledReactionsContainer>
       <CommentModal

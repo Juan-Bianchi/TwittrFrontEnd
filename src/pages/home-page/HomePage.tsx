@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { StyledUserSuggestionContainer } from "./UserSeuggestionContainer";
 import { User } from "../../service";
+import { use } from "i18next";
 
 const HomePage = () => {
   const dispatch = useAppDispatch();

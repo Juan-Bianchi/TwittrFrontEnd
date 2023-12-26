@@ -127,8 +127,8 @@ const httpRequestService = {
       return res.data;
     }
   },
-  deleteReaction: async (reactionId: string) => {
-    const res = await axios.delete(`${url}/reaction/${reactionId}`, {
+  deleteReaction: async (postId: string) => {
+    const res = await axios.delete(`${url}/reaction/${postId}`, {
       headers: {
         Authorization: cookie.get('twittrToken'),
       },
@@ -165,14 +165,14 @@ const httpRequestService = {
     try {
       const cancelToken = axios.CancelToken.source();
 
-      const response = await axios.get(`${url}/user/search`, {
+      const response = await axios.get(`${url}/user/by_username`, {
         headers: {
           Authorization: cookie.get('twittrToken'),
         },
         params: {
-          username,
           limit,
           skip,
+          username,
         },
         cancelToken: cancelToken.token,
       });
@@ -346,6 +346,29 @@ const httpRequestService = {
       },
     });
     if (res.status === 200) {
+      return res.data;
+    }
+  },
+
+  deleteComment: async (id: string) => {
+    await axios.delete(`${url}/comment/${id}`, {
+      headers: {
+        Authorization: cookie.get('twittrToken'),
+      },
+    });
+  },
+  createComment: async (data: PostData) => {
+    const res = await axios.post(`${url}/comment`, data, {
+      headers: {
+        Authorization: cookie.get('twittrToken'),
+      },
+    });
+    if (res.status === 201) {
+      const { upload } = S3Service;
+      for (const imageUrl of res.data.images) {
+        const index: number = res.data.images.indexOf(imageUrl);
+        await upload(data.images![index], imageUrl);
+      }
       return res.data;
     }
   },

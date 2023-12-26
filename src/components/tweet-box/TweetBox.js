@@ -12,12 +12,16 @@ import { StyledTweetBoxContainer } from "./TweetBoxContainer";
 import { StyledContainer } from "../common/Container";
 import { StyledButtonContainer } from "./ButtonContainer";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useGetProfilePosts } from "../../hooks/useGetProfilePosts";
 
 const TweetBox = (props) => {
   const { parentId, close, mobile } = props;
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
+  const location = useLocation()
+  const {posts} = useGetProfilePosts()
 
   const { user, length, query } = useSelector((state) => state.user);
   const httpService = useHttpRequestService();
@@ -29,12 +33,27 @@ const TweetBox = (props) => {
   };
   const handleSubmit = async () => {
     try {
+      if(parentId){
+        const postData = !images.length? {postCommentedId: parentId, content: content} : {postCommentedId: parentId, content: content, images: images}
+        await httpService.createComment(postData)
+      }
+      else {
+        const postData = !images.length? {content: content} : {content: content, images: images}
+        await httpService.createPost(postData)
+      }
       setContent("");
       setImages([]);
       setImagesPreview([]);
       dispatch(setLength(length + 1));
-      const posts = await httpService.getPosts(length + 1, "", query);
-      dispatch(updateFeed(posts));
+      if(location.pathname === '/' ){
+        const homePosts = await httpService.getPosts(query).catch((e) => {
+          console.log(e);
+        });
+        dispatch(updateFeed(homePosts));
+      }
+      else {
+        dispatch(updateFeed(posts));
+      }
       close && close();
     } catch (e) {
       console.log(e);
