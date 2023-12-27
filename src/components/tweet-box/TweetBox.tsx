@@ -59,8 +59,7 @@ const TweetBox = (props: TweetBoxProps) => {
         dispatch(updateFeed(homePosts));
       }
       else {
-        const profilePosts: Post[] = (await httpService.getPostsFromProfile(user.id)).filter(
-              (post: Post) => post.authorId === user.id);
+        const profilePosts: Post[] = await httpService.getPostsFromProfile(user.id);
         dispatch(updateFeed(profilePosts));
       }
       close && close();

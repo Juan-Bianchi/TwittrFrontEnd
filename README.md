@@ -33,7 +33,7 @@ The next component needs the proper changes:
 
 **Why is it important?** In this company, the majority of the projects use React + Typescript. That's why you must be a Master Jedi with the art of Typescript. Additionally, some frameworks like Next.js strongly recommend the utilization of Typescript as a means to mitigate errors and enhance the comprehensibility of components.
 
-### 3. Transform Class Components to Functional Components
+### :rocket: 3. Transform Class Components to Functional Components
 
 The objective of this task is to read and comprehend how class components function. You need to understand the component lifecycle and then transform them into functional components using TypeScript. In order to complete this task, you have to apply the proper changes to the next component:
 

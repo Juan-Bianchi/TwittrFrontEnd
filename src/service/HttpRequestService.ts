@@ -321,12 +321,8 @@ const httpRequestService = {
     });
   },
 
-  getPaginatedCommentsByPostId: async (
-    id: string,
-    limit: number,
-    after: string
-  ) => {
-    const res = await axios.get(`${url}/post/comment/by_post/${id}`, {
+  getPaginatedCommentsByPostId: async ( id: string, limit: number, after: string ) => {
+    const res = await axios.get(`${url}/comment/${id}`, {
       headers: {
         Authorization: cookie.get('twittrToken'),
       },
@@ -340,7 +336,7 @@ const httpRequestService = {
     }
   },
   getCommentsByPostId: async (id: string) => {
-    const res = await axios.get(`${url}/post/comment/by_post/${id}`, {
+    const res = await axios.get(`${url}/comment/${id}`, {
       headers: {
         Authorization: cookie.get('twittrToken'),
       },
