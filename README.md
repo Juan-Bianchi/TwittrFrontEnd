@@ -41,7 +41,7 @@ The objective of this task is to read and comprehend how class components functi
 
 **Why is it important?** It's not very common nowadays to come across a project built from scratch using React class components (as they are not recommended). However, you may encounter them in older projects or libraries that have not been updated. On your journey to becoming a Master Jedi, it's important to familiarize yourself with some basic features of the old way of building components.
 
-### 4. Don’t repeat yourself, STUPID (Opss, that was KISS)
+### :rocket: 4. Don’t repeat yourself, STUPID (Opss, that was KISS)
 
 The objective of this task is to improve the Axios services. The previous developers have repeated the headers so many times. At the same time, we need to provide some logic where if we detect an error 401 (Unauthorized), you should log out the current user. 
 
