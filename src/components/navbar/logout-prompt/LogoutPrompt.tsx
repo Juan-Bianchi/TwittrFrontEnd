@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "../../modal/Modal";
 import logo from "../../../assets/logo.png";
 import Button from "../../button/Button";
@@ -10,6 +10,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import { StyledPromptContainer } from "./PromptContainer";
 import { StyledContainer } from "../../common/Container";
 import { StyledP } from "../../common/text";
+import Cookies from "universal-cookie";
 
 interface LogoutPromptProps {
   show: boolean;
@@ -19,8 +20,10 @@ const LogoutPrompt = ({ show }: LogoutPromptProps) => {
   const [showPrompt, setShowPrompt] = useState<boolean>(show);
   const [showModal, setShowModal] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user.user);
+  const cookie = new Cookies()
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+
   const handleClick = () => {
     setShowModal(true);
   };
@@ -34,7 +37,8 @@ const LogoutPrompt = ({ show }: LogoutPromptProps) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    const cookieName = process.env.REACT_APP_COOKIE_NAME as string;
+    cookie.remove(cookieName);
     navigate("/sign-in");
   };
 

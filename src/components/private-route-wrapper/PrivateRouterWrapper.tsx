@@ -23,7 +23,7 @@ const PrivateRouterWrapper = () => {
 
     handlePrivateRoutes()
     
-  }, [httpRequestService])
+  }, [])
 
   function Element({isLoading, isAuthorized}: ElementProps) {
     if(isLoading){
@@ -32,7 +32,7 @@ const PrivateRouterWrapper = () => {
     else if(isAuthorized) {
       return <Outlet/> 
     }
-    return <Navigate to="/sign-in"/> 
+    return <Navigate to="/sign-in" replace={true} /> 
   }
 
   return <Element isLoading={isLoading} isAuthorized={isAuthorized}/> 

@@ -20,6 +20,8 @@ interface SignUpData {
 const SignUpPage = () => {
   const [data, setData] = useState<Partial<SignUpData>>({});
   const [error, setError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   const httpRequestService = useHttpRequestService();
   const navigate = useNavigate();
@@ -31,15 +33,24 @@ const SignUpPage = () => {
     };
   const handleSubmit = async () => {
     const { confirmPassword, ...requestData } = data;
-    httpRequestService
-      .signUp(requestData)
-      .then(() => navigate("/"))
-      .catch(() => setError(false));
+    const emailAvailable = await httpRequestService.checkUser(requestData.email, undefined)
+            .catch(() => {
+              setEmailError(true)
+            });
+    const usernameAvailable = await httpRequestService.checkUser(undefined, requestData.username)
+            .catch(() => {
+              setUsernameError(true)
+            })
+    if (emailAvailable && usernameAvailable) {
+      httpRequestService.signUp(requestData)
+            .then(() => navigate("/"))
+            .catch(() => setError(true));
+    }
   };
 
   return (
     <AuthWrapper>
-      <form onSubmit={e => e.preventDefault()}  className={"border"}>
+      <div onSubmit={e => e.preventDefault()}  className={"border"}>
         <div className={"container"}>
           <div className={"header"}>
             <img src={logo} alt="Twitter Logo" />
@@ -57,7 +68,7 @@ const SignUpPage = () => {
               required
               placeholder={"Enter username..."}
               title={t("input-params.username")}
-              error={error}
+              error={usernameError || error}
               onChange={handleChange("username")}
             />
             <LabeledInput
@@ -65,7 +76,7 @@ const SignUpPage = () => {
               placeholder={"Enter email..."}
               autocomplete="email"
               title={t("input-params.email")}
-              error={error}
+              error={emailError || error}
               onChange={handleChange("email")}
             />
             <LabeledInput
@@ -85,6 +96,9 @@ const SignUpPage = () => {
               error={error}
               onChange={handleChange("confirmPassword")}
             />
+            <p className={"error-message"}>{usernameError && t("error.username-signup")}</p>
+            <p className={"error-message"}>{emailError && t("error.email-signup")}</p>
+            <p className={"error-message"}>{error && t("error.signup")}</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Button
@@ -101,7 +115,7 @@ const SignUpPage = () => {
             />
           </div>
         </div>
-      </form>
+      </div>
     </AuthWrapper>
   );
 };

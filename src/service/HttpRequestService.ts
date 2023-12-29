@@ -5,15 +5,22 @@ import axiosClient from "./axios/AxiosClient";
 import axios from "axios";
 
 const url = process.env.REACT_APP_API_URL || "https://twitter-ieea.onrender.com/api";
-
 const cookie = new Cookies();
-
 
 const httpRequestService = {
 
   routingAuth: async () => {
-    const res = await axiosClient.post(`${url}/auth/validate`, null)
-    return res.status === 200 ? { isValidToken: true } : { isValidToken: false }
+      const res = await axiosClient.post(`${url}/auth/validate`, null)
+      return res.status === 200 ? { isValidToken: true } : { isValidToken: false }
+  },
+  checkUser: async (email?: string, username?:string)=> {
+    const res = await axios.get(`${url}/auth/checkUser`, {
+      params: {
+        username,
+        email
+      }
+    })
+    return res.status === 200? true: false
   },
   signUp: async (data: Partial<SingUpData>) => {
     const res = await axios.post(`${url}/auth/signup`, data);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyledTweetContainer } from "./TweetContainer";
 import AuthorData from "./user-post-data/AuthorData";
 import type { Post } from "../../service";
@@ -21,6 +21,7 @@ const Tweet = ({ post }: TweetProps) => {
   const [actualPost, setActualPost] = useState<Post>(post);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [showCommentModal, setShowCommentModal] = useState<boolean>(false);
+  const deleteModalRef = useRef<HTMLDivElement>(null)
   const user = useAppSelector((state) => state.user.user);
   const service = useHttpRequestService();
   const navigate = useNavigate();
@@ -48,6 +49,18 @@ const Tweet = ({ post }: TweetProps) => {
     );
   };
 
+  const handleClickOutsideLogoutPrompt = (event: MouseEvent)=> {
+    if(deleteModalRef.current && !deleteModalRef.current.contains(event.target as Node)) {
+      setShowDeleteModal(false)
+    }
+  }
+
+  useEffect(()=> {
+    document.addEventListener('click', handleClickOutsideLogoutPrompt);
+
+    return ()=> document.removeEventListener('click', handleClickOutsideLogoutPrompt)
+  }, [])
+
   return (
     <StyledTweetContainer>
       <StyledContainer
@@ -56,6 +69,7 @@ const Tweet = ({ post }: TweetProps) => {
         alignItems={"center"}
         justifyContent={"center"}
         maxHeight={"48px"}
+        ref={deleteModalRef}
       >
         <AuthorData
           id={post.author.id}

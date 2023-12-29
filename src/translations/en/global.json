@@ -33,7 +33,10 @@
     "comment" : "Tweet your reply"
   },
   "error": {
-    "login": "Sorry, your username or password was incorrect. Please try again."
+    "login": "Sorry, your username or password was incorrect. Please try again.",
+    "signup": "Sorry, check your data and try again",
+    "username-signup": "Sorry, this username is already being used. Please change it.",
+    "email-signup": "Sorry, this email is already being used. Please change it."
   },
   "input-params": {
     "username": "Username",

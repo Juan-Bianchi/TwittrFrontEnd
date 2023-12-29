@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavItem from "./navItem/NavItem";
 import Button from "../button/Button";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,6 +24,7 @@ const NavBar = () => {
   const user = useAppSelector((state) => state.user.user);
   const [tweetModalOpen, setTweetModalOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const promptRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation();
   const handleAvatarClick = () => {
     if (window.innerWidth < 1265) {
@@ -36,6 +37,18 @@ const NavBar = () => {
   const handleLogout = () => {
     setLogoutOpen(!logoutOpen);
   };
+
+  const handleClickOutsideLogoutPrompt = (event: MouseEvent)=> {
+    if(promptRef.current && !promptRef.current.contains(event.target as Node)) {
+      setLogoutOpen(false)
+    }
+  }
+
+  useEffect(()=> {
+    document.addEventListener('click', handleClickOutsideLogoutPrompt);
+
+    return ()=> document.removeEventListener('click', handleClickOutsideLogoutPrompt)
+  }, [])
 
   return (
     <StyledNavBarContainer>
@@ -95,6 +108,7 @@ const NavBar = () => {
         flexDirection={"row"}
         gap={"8px"}
         alignItems={"center"}
+        ref={promptRef}
       >
         <LogoutPrompt show={logoutOpen} />
         <Avatar
