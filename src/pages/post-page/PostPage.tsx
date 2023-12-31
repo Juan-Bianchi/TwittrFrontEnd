@@ -8,20 +8,20 @@ import { StyledH5 } from "../../components/common/text";
 import { StyledFeedContainer } from "../home-page/components/contentContainer/FeedContainer";
 import CommentFeed from "../../components/feed/CommentFeed";
 import { Post } from "../../service";
+import { useLocation } from "react-router-dom";
 
 const PostPage = () => {
-
+  const location = useLocation();
   const service = new HttpService().service;
-  const postId = window.location.href.split("/")[4]
+  const postId = location.pathname.split("/")[2];
   const [post, setPost] = useState<Post | null>(null)
 
-
   useEffect(()=> {
-    fetchPost()
-  }, [])
+    fetchPost(postId)
+  }, [postId])
 
 
-  const fetchPost = ()=> {
+  const fetchPost = (postId: string)=> {
     service.getPostById(postId)
       .then((res) => {
         setPost(res)

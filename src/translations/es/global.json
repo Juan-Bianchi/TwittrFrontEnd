@@ -35,7 +35,16 @@
     "comment": "Escribe tu respuesta"
   },
   "error": {
-    "login": "Lo siento, tu nombre de usuario o contraseña es incorrecto. Por favor, inténtalo de nuevo."
+    "login": "Lo siento, tu nombre de usuario o contraseña es incorrecto. Por favor, inténtalo de nuevo.",
+    "required-email": "Email requerido.",
+    "required-password": "Password requerido.",
+    "email": "Email inválido.",
+    "signup": "Lo siento, chequea tus dtos y vuelve a probar.",
+    "required-username": "Nombre de usuario requerido.",
+    "confirm-password": "Ambas contraseñas deben coincidir.",
+    "username-signup": "Lo siento, el nombre de usuario ya está siendo usado. Por favor cambialo.",
+    "email-signup": "Lo siento, este email ya está siendo usado. Por favor cambialo.",
+    "content": "Lo siento, el largo debe ser menor o igual a 240 caracteres."
   },
   "input-params": {
     "username": "Nombre de usuario",

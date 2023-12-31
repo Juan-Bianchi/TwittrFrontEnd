@@ -34,9 +34,15 @@
   },
   "error": {
     "login": "Sorry, your username or password was incorrect. Please try again.",
+    "required-email": "Email required.",
+    "required-password": "Password required.",
+    "email": "Invalid email address.",
     "signup": "Sorry, check your data and try again",
+    "required-username": "Username required.",
+    "confirm-password": "Both passwords must match.",
     "username-signup": "Sorry, this username is already being used. Please change it.",
-    "email-signup": "Sorry, this email is already being used. Please change it."
+    "email-signup": "Sorry, this email is already being used. Please change it.",
+    "content": "Sorry, length must be equal or less than 240 characters."
   },
   "input-params": {
     "username": "Username",

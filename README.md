@@ -56,7 +56,7 @@ The objective of this task is to fix 2 bugs that the app has.
 1. We are not checking that the user already exists when registering.
 2. The menus (those kind of floating containers) when users click out of them, they are not closing.
 
-### 6. Validation
+### :rocket: 6. Validation
 
 The objective of this task is to add some validations to the input fields that the app has. This time we will use Formik to perform the validations. It’s a famous library that allows us to add some logic to validate what users fill in.
 

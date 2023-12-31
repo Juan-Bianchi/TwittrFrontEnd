@@ -15,6 +15,8 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { Post, PostData } from "../../service";
 import { useAppSelector } from "../../redux/hooks";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
 
 interface TweetBoxProps {
   parentId?: string;
@@ -25,7 +27,6 @@ interface TweetBoxProps {
 
 const TweetBox = (props: TweetBoxProps) => {
   const { parentId, close, mobile } = props;
-  const [content, setContent] = useState<string>("");
   const [images, setImages] = useState<File[]>([]);
   const [imagesPreview, setImagesPreview] = useState<string[]>([]);
   const location = useLocation()
@@ -34,11 +35,15 @@ const TweetBox = (props: TweetBoxProps) => {
   const httpService = useHttpRequestService();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const formik = useFormik({
+    initialValues: {content: ''},
+    validationSchema: Yup.object({
+      content: Yup.string().required().test('len', t('error.content'), val => val.length <= 240)
+    }),
+    onSubmit: values => handleSubmit(values.content)
+  })
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
-  const handleSubmit = async () => {
+  const handleSubmit = async (content: string) => {
     try {
       if(parentId){
         const postData: PostData = !images.length? {postCommentedId: parentId, content: content} : {postCommentedId: parentId, content: content, images: images}
@@ -48,7 +53,6 @@ const TweetBox = (props: TweetBoxProps) => {
         const postData: PostData = !images.length? {content: content} : {content: content, images: images}
         await httpService.createPost(postData)
       }
-      setContent("");
       setImages([]);
       setImagesPreview([]);
       dispatch(setLength(length + 1));
@@ -94,17 +98,18 @@ const TweetBox = (props: TweetBoxProps) => {
             text={"Tweet"}
             buttonType={ButtonType.DEFAULT}
             size={"SMALL"}
-            onClick={handleSubmit}
-            disabled={content.length === 0}
+            onClick={ e => {
+              e.preventDefault();
+              formik.handleSubmit();
+            }}
+            disabled={formik.values.content.length === 0}
           />
         </StyledContainer>
       )}
       <StyledContainer style={{ width: "100%" }}>
         <TweetInput
-          onChange={(e) => handleChange(e)}
-          maxLength={240}
+          {...formik.getFieldProps('content')}
           placeholder={t("placeholder.tweet")}
-          value={content}
           src={user.profilePicture}
         />
         <StyledContainer padding={"0 0 0 10%"}>
@@ -121,10 +126,13 @@ const TweetBox = (props: TweetBoxProps) => {
               text={"Tweet"}
               buttonType={ButtonType.DEFAULT}
               size={"SMALL"}
-              onClick={handleSubmit}
+              onClick={ e => {
+                e.preventDefault();
+                formik.handleSubmit();
+              }}
               disabled={
-                content.length <= 0 ||
-                content.length > 240 ||
+                formik.values.content.length <= 0 ||
+                formik.values.content.length > 240 ||
                 images.length > 4 ||
                 images.length < 0
               }

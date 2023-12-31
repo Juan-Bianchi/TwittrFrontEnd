@@ -11,16 +11,20 @@ import ThreeDots from "../common/ThreeDots";
 import { useTranslation } from "react-i18next";
 import { ButtonType } from "../button/StyledButton";
 import Icon from "../../assets/icon.jpg";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { StyledNavBarContainer } from "./NavBarContainer";
 import { StyledContainer } from "../common/Container";
 import { StyledIconContainer } from "./IconContainer";
 import { StyledNavItemsContainer } from "./navItem/NavItemsContainer";
 import { StyledP } from "../common/text";
+import { useHttpRequestService } from "../../service/HttpRequestService";
+import { setUser } from "../../redux/user";
 
 const NavBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const service = useHttpRequestService()
   const user = useAppSelector((state) => state.user.user);
   const [tweetModalOpen, setTweetModalOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -44,7 +48,21 @@ const NavBar = () => {
     }
   }
 
+  const handleSetUser = async ()=> {
+    try {
+      const userReloaded = await service.me();
+      dispatch(setUser(userReloaded));
+    }
+    catch(e) {
+      navigate("/sign-in");
+    }
+    
+  }
+
   useEffect(()=> {
+    if(user && user.id === ''){
+      handleSetUser()
+    }
     document.addEventListener('click', handleClickOutsideLogoutPrompt);
 
     return ()=> document.removeEventListener('click', handleClickOutsideLogoutPrompt)

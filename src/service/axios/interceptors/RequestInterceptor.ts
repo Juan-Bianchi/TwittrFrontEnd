@@ -7,7 +7,7 @@ const requestInterceptor = (axiosInstance: AxiosInstance, cookie: Cookies, cooki
     config.headers["Authorization"] = jwtToken;
 
     return config;
-  }, error => console.log(error), {synchronous:true})
+  }, error => Promise.reject(error), {synchronous:true})
 }
 
 export default requestInterceptor;

@@ -1,4 +1,3 @@
-import type { ChangeEvent } from "react";
 import React, { useState } from "react";
 import logo from "../../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +8,8 @@ import LabeledInput from "../../../components/labeled-input/LabeledInput";
 import Button from "../../../components/button/Button";
 import { ButtonType } from "../../../components/button/StyledButton";
 import { StyledH3 } from "../../../components/common/text";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
 
 interface SignUpData {
   name: string;
@@ -18,7 +19,6 @@ interface SignUpData {
   confirmPassword: string;
 }
 const SignUpPage = () => {
-  const [data, setData] = useState<Partial<SignUpData>>({});
   const [error, setError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -26,12 +26,20 @@ const SignUpPage = () => {
   const httpRequestService = useHttpRequestService();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const formik = useFormik({
+    initialValues: {name: '', username: '', email: '', password: '', confirmPassword: ''},
+    validationSchema: 
+      Yup.object({
+        name: Yup.string(),
+        username: Yup.string().required(t('error.required-username')),
+        email: Yup.string().email(t('error.email')).required(t('error.required-email')),
+        password: Yup.string().required(t('error.required-password')),
+        confirmPassword: Yup.string().required(t('error.required-password')).oneOf([Yup.ref('password'), ''],t('error.confirm-password'))
+      }),
+    onSubmit: values => handleSubmit(values)
+  })
 
-  const handleChange =
-    (prop: string) => (event: ChangeEvent<HTMLInputElement>) => {
-      setData({ ...data, [prop]: event.target.value });
-    };
-  const handleSubmit = async () => {
+  const handleSubmit = async (data: SignUpData) => {
     const { confirmPassword, ...requestData } = data;
     const emailAvailable = await httpRequestService.checkUser(requestData.email, undefined)
             .catch(() => {
@@ -58,44 +66,54 @@ const SignUpPage = () => {
           </div>
           <div className={"input-container"}>
             <LabeledInput
-              required
+              {...formik.getFieldProps('name')}
               placeholder={"Enter name..."}
               title={t("input-params.name")}
               error={error}
-              onChange={handleChange("name")}
             />
             <LabeledInput
-              required
+              {...formik.getFieldProps('username')}
               placeholder={"Enter username..."}
               title={t("input-params.username")}
               error={usernameError || error}
-              onChange={handleChange("username")}
             />
             <LabeledInput
-              required
+              {...formik.getFieldProps('email')}
               placeholder={"Enter email..."}
               autocomplete="email"
               title={t("input-params.email")}
               error={emailError || error}
-              onChange={handleChange("email")}
             />
             <LabeledInput
               type="password"
-              required
+              {...formik.getFieldProps('password')}
               placeholder={"Enter password..."}
               autocomplete="current-password"
               title={t("input-params.password")}
               error={error}
-              onChange={handleChange("password")}
             />
             <LabeledInput
               type="password"
-              required
+              {...formik.getFieldProps('confirmPassword')}
               placeholder={"Confirm password..."}
               title={t("input-params.confirm-password")}
               error={error}
-              onChange={handleChange("confirmPassword")}
             />
+            { formik.errors.name && formik.touched.name ? 
+              <p className={"error-message"}>{formik.errors.name}</p>: null
+            }
+            { formik.errors.username && formik.touched.username ? 
+              <p className={"error-message"}>{formik.errors.username}</p>: null
+            }
+            { formik.errors.password && formik.touched.password ? 
+              <p className={"error-message"}>{formik.errors.password}</p>: null
+            }
+            { formik.errors.email && formik.touched.email ? 
+              <p className={"error-message"}>{formik.errors.email}</p>: null
+            }
+            { formik.errors.confirmPassword && formik.touched.confirmPassword ? 
+              <p className={"error-message"}>{formik.errors.confirmPassword}</p>: null
+            }
             <p className={"error-message"}>{usernameError && t("error.username-signup")}</p>
             <p className={"error-message"}>{emailError && t("error.email-signup")}</p>
             <p className={"error-message"}>{error && t("error.signup")}</p>
@@ -105,7 +123,10 @@ const SignUpPage = () => {
               text={t("buttons.register")}
               buttonType={ButtonType.FOLLOW}
               size={"MEDIUM"}
-              onClick={handleSubmit}
+              onClick={e => {
+                e.preventDefault(); 
+                formik.handleSubmit()
+              }}
             />
             <Button
               text={t("buttons.login")}

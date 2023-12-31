@@ -7,6 +7,8 @@ const StyledSignInWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  overflow: auto;
 
   .header {
     display: flex;
@@ -56,7 +58,7 @@ const StyledSignInWrapper = styled.div`
       margin-bottom: 16px;
     }
     .border {
-      height: 80vh; /* Set height to full viewport height */
+      height: 95%; /* Set height to full viewport height */
       width: 600px;
       display: flex;
       flex-direction: column;
@@ -64,6 +66,7 @@ const StyledSignInWrapper = styled.div`
       justify-content: center;
       border-radius: 8px;
       border: 1px solid #f0f3f4;
+      padding-top: 15px
     }
   }
 `;

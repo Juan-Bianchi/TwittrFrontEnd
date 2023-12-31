@@ -13,14 +13,13 @@ import Loader from "../../components/loader/Loader";
 const HomePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const query = useAppSelector((state) => state.user.query);
   const service = useHttpRequestService();
   const [isLoading, setIsLoading] = useState(true);
 
   const handleSetUser = async () => {
     try {
       const user: User = await service.me();
-      const data = await service.getPosts(query);
+      const data = await service.getPaginatedPosts(7, '', '');
       dispatch(setUser(user));
       dispatch(updateFeed(data));
       setIsLoading(false)

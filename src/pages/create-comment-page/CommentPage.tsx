@@ -14,17 +14,26 @@ import { ButtonType } from "../../components/button/StyledButton";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { StyledContainer } from "../../components/common/Container";
 import { StyledLine } from "../../components/common/Line";
-import { StyledP } from "../../components/common/text";
+import { StyledH5, StyledP } from "../../components/common/text";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
 
 const CommentPage = () => {
-  const [content, setContent] = useState("");
   const [post, setPost] = useState<Post | undefined>(undefined);
   const [images, setImages] = useState<File[]>([]);
-  const postId = useLocation().pathname.split("/")[3];
+  const postId = useLocation().pathname.split("/")[2];
   const service = useHttpRequestService();
   const { user, length, query } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const formik = useFormik({
+    initialValues: {content: ''},
+    validationSchema: Yup.object({
+      content: Yup.string().required().test('len', t('error.content'), val => val.length <= 240)
+    }),
+    onSubmit: values => handleSubmit()
+  })
+
 
   useEffect(() => {
     window.innerWidth > 600 && exit();
@@ -46,7 +55,6 @@ const CommentPage = () => {
   };
 
   const handleSubmit = async () => {
-    setContent("");
     setImages([]);
     dispatch(setLength(length + 1));
     const posts = await service.getPosts(query);
@@ -66,12 +74,13 @@ const CommentPage = () => {
         justifyContent={"space-between"}
       >
         <BackArrowIcon onClick={exit} />
+        <StyledH5>Comment</StyledH5>
         <Button
           text={"Tweet"}
           buttonType={ButtonType.DEFAULT}
           size={"SMALL"}
           onClick={handleSubmit}
-          disabled={content.length === 0}
+          disabled={formik.values.content.length === 0}
         />
       </StyledContainer>
       {post && (
@@ -92,11 +101,9 @@ const CommentPage = () => {
           </StyledContainer>
           <StyledContainer gap={"4px"}>
             <TweetInput
-              maxLength={240}
               placeholder={t("placeholder.comment")}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
               src={user.profilePicture}
+              {...formik.getFieldProps('content')}
             />
             {images.length > 0 && (
               <ImageContainer

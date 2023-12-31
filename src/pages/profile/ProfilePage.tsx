@@ -11,6 +11,7 @@ import Button from "../../components/button/Button";
 import ProfileFeed from "../../components/feed/ProfileFeed";
 import { StyledContainer } from "../../components/common/Container";
 import { StyledH5 } from "../../components/common/text";
+import Cookies from "universal-cookie";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<User | null>(null);
@@ -28,6 +29,7 @@ const ProfilePage = () => {
   const id = useParams().id;
   const service = useHttpRequestService();
   const navigate = useNavigate();
+  const cookie = new Cookies()
 
   const { t } = useTranslation();
 
@@ -41,8 +43,9 @@ const ProfilePage = () => {
 
   const handleSubmit = () => {
     if (profile?.id === user.id) {
+      const cookieName = process.env.REACT_APP_COOKIE_NAME as string
       service.deleteProfile().then(() => {
-        localStorage.removeItem("token");
+        cookie.remove(cookieName)
         navigate("/sign-in");
       });
     } else {

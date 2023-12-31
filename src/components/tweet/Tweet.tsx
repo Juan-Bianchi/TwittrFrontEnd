@@ -26,6 +26,7 @@ const Tweet = ({ post }: TweetProps) => {
   const service = useHttpRequestService();
   const navigate = useNavigate();
 
+
   const getCountByType = (type: string): number => {
     return actualPost.reactions.filter((r) => r.type === type).length ?? 0;
   };
@@ -110,7 +111,7 @@ const Tweet = ({ post }: TweetProps) => {
           reactionFunction={() =>
             window.innerWidth > 600
               ? setShowCommentModal(true)
-              : navigate(`/compose/comment/${post.id}`)
+              : navigate(`/comment/${post.id}`)
           }
           increment={0}
           reacted={false}

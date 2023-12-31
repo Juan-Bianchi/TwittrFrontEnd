@@ -5,31 +5,37 @@ import { StyledInputElement } from "./StyledInputElement";
 
 interface InputWithLabelProps {
   type?: "password" | "text";
+  name: string;
   title: string;
   placeholder: string;
   autocomplete?: string;
-  required: boolean;
   error?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const LabeledInput = ({
   title,
   placeholder,
-  required,
   error,
   autocomplete,
   onChange,
+  onBlur,
+  onFocus,
   type = "text",
+  name,
 }: InputWithLabelProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [focus, setFocus] = useState(false);
 
-  const handleFocus = () => {
+  const handleFocus = (e:  React.FocusEvent<HTMLInputElement>) => {
+    onFocus && onFocus(e)
     setFocus(true);
   };
 
-  const handleBlur = () => {
+  const handleBlur = (e:  React.FocusEvent<HTMLInputElement>) => {
+    onBlur && onBlur(e)
     setFocus(false);
   };
 
@@ -51,12 +57,12 @@ const LabeledInput = ({
         {title}
       </StyledInputTitle>
       <StyledInputElement
+        name={name}
         type={type}
-        required={required}
         placeholder={placeholder}
         autoComplete={autocomplete}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onFocus={(e) => handleFocus(e)}
+        onBlur={(e)=> handleBlur(e)}
         onChange={onChange}
         className={error ? "error" : ""}
         ref={inputRef}
