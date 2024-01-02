@@ -53,7 +53,7 @@ const LogoutPrompt = ({ show }: LogoutPromptProps) => {
           <StyledContainer
             flexDirection={"row"}
             gap={"16px"}
-            borderBottom={"1px solid #ebeef0"}
+            borderBottom={"1px solid #a4ccf46f"}
             padding={"16px"}
             alignItems={"center"}
           >

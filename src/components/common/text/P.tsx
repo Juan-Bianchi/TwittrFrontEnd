@@ -17,4 +17,5 @@ export const StyledP = styled.p`
   line-height: 110%;
   letter-spacing: -0.15px;
   margin: 0;
+  z-index: 10;
 `;

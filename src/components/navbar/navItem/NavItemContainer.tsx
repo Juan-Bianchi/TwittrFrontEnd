@@ -27,10 +27,13 @@ export const StyledNavItemContainer = styled.div`
     line-height: 110%;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 600px) {
     p {
       display: none;
     }
+  }
+
+  @media (max-width: 1024px) {
 
     .Button {
       display: none;

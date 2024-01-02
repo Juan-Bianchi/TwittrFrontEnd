@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import NavItem from "./navItem/NavItem";
-import Button from "../button/Button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { StyledTweetButton } from "../tweet-button/StyledTweetButton";
 import TweetModal from "../tweet-modal/TweetModal";
@@ -9,7 +8,6 @@ import Avatar from "../common/avatar/Avatar";
 import LogoutPrompt from "./logout-prompt/LogoutPrompt";
 import ThreeDots from "../common/ThreeDots";
 import { useTranslation } from "react-i18next";
-import { ButtonType } from "../button/StyledButton";
 import Icon from "../../assets/icon.jpg";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { StyledNavBarContainer } from "./NavBarContainer";
@@ -19,6 +17,8 @@ import { StyledNavItemsContainer } from "./navItem/NavItemsContainer";
 import { StyledP } from "../common/text";
 import { useHttpRequestService } from "../../service/HttpRequestService";
 import { setUser } from "../../redux/user";
+import { MyButtonSize, MyButtonVariant } from "../my-button/StyledMyButton";
+import MyButton from "../my-button/MyButton";
 
 const NavBar = () => {
   const location = useLocation();
@@ -104,14 +104,14 @@ const NavBar = () => {
           </StyledTweetButton>
         </StyledNavItemsContainer>
         <StyledContainer width={"100%"}>
-          <Button
-            text={"Tweet"}
-            size={"180px"}
-            buttonType={ButtonType.DEFAULT}
+        <MyButton
+            buttonSize={MyButtonSize.MEDIUM}
+            text={'Tweet'}
+            buttonVariant={MyButtonVariant.FULFILLED} 
             onClick={() => {
               setTweetModalOpen(true);
             }}
-          ></Button>
+          />
         </StyledContainer>
         <TweetModal
           open={tweetModalOpen}

@@ -14,4 +14,3 @@ requestInterceptor(axiosClient, cookie, cookieName);
 responseInterceptor(axiosClient);
 
 export default axiosClient;
-

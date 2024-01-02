@@ -19,7 +19,7 @@ export const StyledInputContainer = styled.form`
 
     &.active-div {
       width: 415px;
-      //transform: translateX(39px); /* Adjust the value based on the width difference */
+      transform: translateX(39px); /* Adjust the value based on the width difference */
     }
   }
 `;

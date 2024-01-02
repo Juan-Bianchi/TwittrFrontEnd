@@ -2,7 +2,7 @@ import styled from "styled-components";
 import "@fontsource/inter";
 
 const StyledSignInWrapper = styled.div`
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,6 +45,7 @@ const StyledSignInWrapper = styled.div`
     font-weight: 400;
     line-height: 13px;
     letter-spacing: -0.01em;
+    margin-bottom: 0
   }
 
   /* Media query for screens larger than the phone size */
@@ -58,7 +59,7 @@ const StyledSignInWrapper = styled.div`
       margin-bottom: 16px;
     }
     .border {
-      height: 95%; /* Set height to full viewport height */
+      height: 95vh; 
       width: 600px;
       display: flex;
       flex-direction: column;

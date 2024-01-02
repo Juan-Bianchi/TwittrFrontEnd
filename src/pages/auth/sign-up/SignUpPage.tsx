@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AuthWrapper from "../../../pages/auth/AuthWrapper";
 import { useHttpRequestService } from "../../../service/HttpRequestService";
-import LabeledInput from "../../../components/labeled-input/LabeledInput";
-import Button from "../../../components/button/Button";
-import { ButtonType } from "../../../components/button/StyledButton";
 import { StyledH3 } from "../../../components/common/text";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
+import MyButton from "../../../components/my-button/MyButton";
+import { MyButtonSize, MyButtonVariant } from "../../../components/my-button/StyledMyButton";
+import MyInput from "../../../components/my-input/MyInput";
+import { MyInputSize, MyInputVariant } from "../../../components/my-input/StyledMyInputContainer";
 
 interface SignUpData {
   name: string;
@@ -65,39 +66,51 @@ const SignUpPage = () => {
             <StyledH3>{t("title.register")}</StyledH3>
           </div>
           <div className={"input-container"}>
-            <LabeledInput
+            <MyInput
               {...formik.getFieldProps('name')}
+              variant={MyInputVariant.FULFILLED}
+              size={MyInputSize.SMALL}
               placeholder={"Enter name..."}
               title={t("input-params.name")}
               error={error}
             />
-            <LabeledInput
+            <MyInput
               {...formik.getFieldProps('username')}
+              variant={MyInputVariant.FULFILLED}
+              size={MyInputSize.SMALL}
               placeholder={"Enter username..."}
               title={t("input-params.username")}
-              error={usernameError || error}
+              error={usernameError || error || 
+                     (formik.errors.username && formik.touched.username) ? true: false }
             />
-            <LabeledInput
+            <MyInput
               {...formik.getFieldProps('email')}
+              variant={MyInputVariant.FULFILLED}
+              size={MyInputSize.SMALL}
               placeholder={"Enter email..."}
               autocomplete="email"
               title={t("input-params.email")}
-              error={emailError || error}
+              error={emailError || error ||
+                    (formik.errors.email && formik.touched.email)? true: false}
             />
-            <LabeledInput
+            <MyInput
               type="password"
               {...formik.getFieldProps('password')}
+              variant={MyInputVariant.FULFILLED}
+              size={MyInputSize.SMALL}
               placeholder={"Enter password..."}
               autocomplete="current-password"
               title={t("input-params.password")}
-              error={error}
+              error={error || (formik.errors.password && formik.touched.password)? true: false }
             />
-            <LabeledInput
+            <MyInput
               type="password"
               {...formik.getFieldProps('confirmPassword')}
+              variant={MyInputVariant.FULFILLED}
+              size={MyInputSize.SMALL}
               placeholder={"Confirm password..."}
               title={t("input-params.confirm-password")}
-              error={error}
+              error={error || (formik.errors.confirmPassword && formik.touched.confirmPassword)? true: false}
             />
             { formik.errors.name && formik.touched.name ? 
               <p className={"error-message"}>{formik.errors.name}</p>: null
@@ -114,24 +127,24 @@ const SignUpPage = () => {
             { formik.errors.confirmPassword && formik.touched.confirmPassword ? 
               <p className={"error-message"}>{formik.errors.confirmPassword}</p>: null
             }
-            <p className={"error-message"}>{usernameError && t("error.username-signup")}</p>
-            <p className={"error-message"}>{emailError && t("error.email-signup")}</p>
-            <p className={"error-message"}>{error && t("error.signup")}</p>
+            {usernameError && <p className={"error-message"}>{t("error.username-signup")}</p>}
+            {emailError && <p className={"error-message"}>{t("error.email-signup")}</p>}
+            {error && <p className={"error-message"}>{t("error.signup")}</p>}
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <Button
+            <MyButton
               text={t("buttons.register")}
-              buttonType={ButtonType.FOLLOW}
-              size={"MEDIUM"}
+              buttonVariant={MyButtonVariant.BLACK}
+              buttonSize={MyButtonSize.MEDIUM}
               onClick={e => {
                 e.preventDefault(); 
                 formik.handleSubmit()
               }}
             />
-            <Button
+            <MyButton
               text={t("buttons.login")}
-              buttonType={ButtonType.OUTLINED}
-              size={"MEDIUM"}
+              buttonVariant={MyButtonVariant.WHITE}
+              buttonSize={MyButtonSize.MEDIUM}
               onClick={() => navigate("/sign-in")}
             />
           </div>

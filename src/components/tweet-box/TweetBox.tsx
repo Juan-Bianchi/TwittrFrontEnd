@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "../button/Button";
 import TweetInput from "../tweet-input/TweetInput";
 import { useHttpRequestService } from "../../service/HttpRequestService";
 import { setLength, updateFeed } from "../../redux/user";
@@ -7,7 +6,6 @@ import ImageContainer from "../tweet/tweet-image/ImageContainer";
 import { BackArrowIcon } from "../icon/Icon";
 import ImageInput from "../common/ImageInput";
 import { useTranslation } from "react-i18next";
-import { ButtonType } from "../button/StyledButton";
 import { StyledTweetBoxContainer } from "./TweetBoxContainer";
 import { StyledContainer } from "../common/Container";
 import { StyledButtonContainer } from "./ButtonContainer";
@@ -17,6 +15,8 @@ import { Post, PostData } from "../../service";
 import { useAppSelector } from "../../redux/hooks";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
+import MyButton from "../my-button/MyButton";
+import { MyButtonSize, MyButtonVariant } from "../my-button/StyledMyButton";
 
 interface TweetBoxProps {
   parentId?: string;
@@ -93,11 +93,11 @@ const TweetBox = (props: TweetBoxProps) => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <BackArrowIcon onClick={()=>close} />
-          <Button
-            text={"Tweet"}
-            buttonType={ButtonType.DEFAULT}
-            size={"SMALL"}
+          <BackArrowIcon onClick={() => close && close()} />
+          <MyButton 
+            buttonSize={MyButtonSize.SMALL}
+            buttonVariant={MyButtonVariant.OUTLINED}
+            text="Tweet"
             onClick={ e => {
               e.preventDefault();
               formik.handleSubmit();
@@ -122,21 +122,24 @@ const TweetBox = (props: TweetBoxProps) => {
         <StyledButtonContainer>
           <ImageInput setImages={handleAddImage} parentId={parentId} />
           {!mobile && (
-            <Button
-              text={"Tweet"}
-              buttonType={ButtonType.DEFAULT}
-              size={"SMALL"}
-              onClick={ e => {
-                e.preventDefault();
-                formik.handleSubmit();
-              }}
-              disabled={
-                formik.values.content.length <= 0 ||
-                formik.values.content.length > 240 ||
-                images.length > 4 ||
-                images.length < 0
-              }
-            />
+            <>
+              <MyButton 
+                buttonSize={MyButtonSize.SMALL}
+                buttonVariant={MyButtonVariant.OUTLINED}
+                text="Tweet"
+                onClick={ e => {
+                  e.preventDefault();
+                  formik.handleSubmit();
+                }}
+                disabled={
+                  formik.values.content.length <= 0 ||
+                  formik.values.content.length > 240 ||
+                  images.length > 4 ||
+                  images.length < 0
+                }
+              />
+            </>
+            
           )}
         </StyledButtonContainer>
       </StyledContainer>

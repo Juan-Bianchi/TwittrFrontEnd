@@ -5,7 +5,7 @@ import UserDataBox from "../user-data-box/UserDataBox";
 import { useTranslation } from "react-i18next";
 import { ButtonType } from "../button/StyledButton";
 import { useAppSelector } from "../../redux/hooks";
-import "./FollowUserBox.css";
+import { StyledUserBoxContainer } from "./StyledUserBoxContainer";
 
 interface FollowUserBoxProps {
   profilePicture?: string;
@@ -38,7 +38,7 @@ const FollowUserBox = ({
   };
 
   return (
-    <div className="box-container">
+    <StyledUserBoxContainer>
       <UserDataBox
         id={id}
         name={name!}
@@ -51,7 +51,7 @@ const FollowUserBox = ({
         size={"SMALL"}
         onClick={handleFollow}
       />
-    </div>
+    </StyledUserBoxContainer>
   );
 };
 

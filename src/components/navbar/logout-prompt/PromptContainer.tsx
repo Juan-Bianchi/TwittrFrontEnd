@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledPromptContainer = styled.div`
   display: flex;
-  min-width: 304px;
+  min-width: 264px;
   padding: 16px;
   flex-direction: column;
   justify-content: center;
@@ -12,10 +12,12 @@ export const StyledPromptContainer = styled.div`
   flex-shrink: 0;
   background: ${(props) => props.theme.background};
   border-radius: 16px;
-  border: 1px solid ${(props) => props.theme.colors.containerLine};
+  border: 1px solid ${(props) => props.theme.colors.light};
   position: absolute;
   top: -300%;
+
   transition: 0.3s ease-in-out;
+  z-index: 100;
 
   &:hover {
     cursor: pointer;
@@ -23,9 +25,9 @@ export const StyledPromptContainer = styled.div`
   }
 
   @media (max-width: 1265px) {
-    left: 7%;
+    left: -80%;
     p {
-      display: flex;
+      display: flex !important;
     }
   }
 `;

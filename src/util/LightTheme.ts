@@ -13,6 +13,11 @@ export const LightTheme: Partial<Theme> = {
     text: "#566370",
     black: "#000000",
     errorContainer: "#E5397F",
+
+    myButtonMain: '#2890f1',
+    myButtonOutline: '#286bf1',
+    error2: '#fe4567',
+    lightTransparent: '#a4ccf46f'
   },
   hover: {
     default: "#428AD2",
@@ -20,6 +25,10 @@ export const LightTheme: Partial<Theme> = {
     error: "#FF0000",
     outlined: "#f3f3f3",
     disabled: "#A5CCF4",
+
+    myButtonMain: '#2890f1',
+    myButtonOutline: '#286bf1',
+    white: "#FFFFFF"
   },
   text: {
     default: "#566370",
@@ -30,6 +39,16 @@ export const LightTheme: Partial<Theme> = {
     default: "Manrope",
     title: "Inter",
   },
+  buttonSize: {
+    small: "95px",
+    medium: "150px",
+    large: "160px"
+  },
+  inputSize: {
+    small: "224px",
+    medium: "270px",
+    large: "310px"
+  }
 };
 
 export type Theme = {
@@ -47,6 +66,11 @@ export type Theme = {
     text: string;
     black: string;
     errorContainer: string;
+
+    myButtonMain: string;
+    myButtonOutline: string;
+    error2: string;
+    lightTransparent: string;
   };
   hover: {
     default: string;
@@ -54,6 +78,10 @@ export type Theme = {
     error: string;
     outlined: string;
     disabled: string;
+
+    myButtonMain: string;
+    myButtonOutline: string;
+    white: string;
   };
   text: {
     default: string;
@@ -64,4 +92,14 @@ export type Theme = {
     default: string;
     title: string;
   };
+  buttonSize: {
+    small: string;
+    medium: string;
+    large: string;
+  };
+  inputSize: {
+    small: string;
+    medium: string;
+    large: string;
+  }
 };

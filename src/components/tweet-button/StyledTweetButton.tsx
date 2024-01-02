@@ -21,11 +21,8 @@ export const StyledTweetButton = styled.button`
     transform: scale(0.95);
   }
 
-  @media (max-width: 1265px) {
-    display: flex;
-  }
-
   @media (max-width: 600px) {
+    display: flex;
     position: absolute;
     top: -70px;
     right: 16px;

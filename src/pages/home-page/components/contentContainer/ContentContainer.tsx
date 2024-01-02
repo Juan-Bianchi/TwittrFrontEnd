@@ -7,6 +7,7 @@ import ContentFeed from "../../../../components/feed/ContentFeed";
 import { StyledContainer } from "../../../../components/common/Container";
 
 const ContentContainer = () => {
+
   return (
     <StyledContentContainer>
       <Header />

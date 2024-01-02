@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useHttpRequestService } from "../../../service/HttpRequestService";
 import AuthWrapper from "../AuthWrapper";
-import LabeledInput from "../../../components/labeled-input/LabeledInput";
-import Button from "../../../components/button/Button";
-import { ButtonType } from "../../../components/button/StyledButton";
 import { StyledH3 } from "../../../components/common/text";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import MyButton from "../../../components/my-button/MyButton";
+import { MyButtonSize, MyButtonVariant } from "../../../components/my-button/StyledMyButton";
+import MyInput from "../../../components/my-input/MyInput";
+import { MyInputSize, MyInputVariant } from "../../../components/my-input/StyledMyInputContainer";
 
 interface FormValues {
   email: string,
@@ -51,20 +52,24 @@ const SignInPage = () => {
             <StyledH3>{t("title.login")}</StyledH3>
           </div>
           <div className={"input-container"}>
-            <LabeledInput
+            <MyInput
               {...formik.getFieldProps('email')}
+              variant={MyInputVariant.FULFILLED}
+              size={MyInputSize.SMALL}
               placeholder={"Enter email..."}
               autocomplete="email"
               title={t("input-params.email")}
-              error={error}
+              error={error || (formik.errors.email && formik.touched.email)? true: false}
             />
-            <LabeledInput
+            <MyInput
               type="password"
               {...formik.getFieldProps('password')}
+              variant={MyInputVariant.FULFILLED}
+              size={MyInputSize.SMALL}
               placeholder={"Enter password..."}
               autocomplete="current-password"
               title={t("input-params.password")}
-              error={error}
+              error={error || (formik.errors.password && formik.touched.password)? true: false}
             />
             { formik.errors.password && formik.touched.password ? 
               <p className={"error-message"}>{formik.errors.password}</p>: null
@@ -75,19 +80,19 @@ const SignInPage = () => {
             <p className={"error-message"}>{error && t("error.login")}</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <Button
+            <MyButton
               text={t("buttons.login")}
-              buttonType={ButtonType.FOLLOW}
-              size={"MEDIUM"}
+              buttonVariant={MyButtonVariant.BLACK}
+              buttonSize={MyButtonSize.MEDIUM}
               onClick={(e)=> {
                 e.preventDefault(); 
                 formik.handleSubmit()
               }}
             />
-            <Button
+            <MyButton
               text={t("buttons.register")}
-              buttonType={ButtonType.OUTLINED}
-              size={"MEDIUM"}
+              buttonVariant={MyButtonVariant.WHITE}
+              buttonSize={MyButtonSize.MEDIUM}
               onClick={() => navigate("/sign-up")}
             />
           </div>

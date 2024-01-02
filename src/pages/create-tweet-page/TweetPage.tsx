@@ -3,6 +3,7 @@ import { StyledContainer } from "../../components/common/Container";
 import TweetBox from "../../components/tweet-box/TweetBox";
 
 const TweetPage = () => {
+  
   const exit = () => {
     window.history.back();
   };
@@ -13,7 +14,7 @@ const TweetPage = () => {
 
   return (
     <StyledContainer padding={"16px"} borderBottom={"1px solid #ebeef0"}>
-      <TweetBox close={exit} mobile borderless />
+      <TweetBox close={() => exit()} mobile borderless />
     </StyledContainer>
   );
 };
