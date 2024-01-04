@@ -42,7 +42,8 @@
     "confirm-password": "Both passwords must match.",
     "username-signup": "Sorry, this username is already being used. Please change it.",
     "email-signup": "Sorry, this email is already being used. Please change it.",
-    "content": "Sorry, length must be equal or less than 240 characters."
+    "content": "Sorry, length must be equal or less than 240 characters.",
+    "strong-password": "Password must contain at least one uppercase char, one lowercase char, a number and an special character"
   },
   "input-params": {
     "username": "Username",

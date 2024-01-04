@@ -19,9 +19,7 @@ const HomePage = () => {
   const handleSetUser = async () => {
     try {
       const user: User = await service.me();
-      const data = await service.getPaginatedPosts(7, '', '');
       dispatch(setUser(user));
-      dispatch(updateFeed(data));
       setIsLoading(false)
     } catch (e) {
       navigate("/sign-in");

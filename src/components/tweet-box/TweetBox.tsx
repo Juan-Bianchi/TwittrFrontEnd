@@ -53,6 +53,7 @@ const TweetBox = (props: TweetBoxProps) => {
         const postData: PostData = !images.length? {content: content} : {content: content, images: images}
         await httpService.createPost(postData)
       }
+      formik.setValues({ content: '' });
       setImages([]);
       setImagesPreview([]);
       dispatch(setLength(length + 1));

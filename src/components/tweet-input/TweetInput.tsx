@@ -10,6 +10,7 @@ interface TweetInputProps {
   src?: string;
   alt?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  value?: string;
 }
 const TweetInput = ({
   placeholder,
@@ -17,6 +18,7 @@ const TweetInput = ({
   alt,
   onChange,
   name,
+  value
 }: TweetInputProps) => {
   return (
     <StyledTweetInputContainer>
@@ -25,6 +27,7 @@ const TweetInput = ({
         onChange={onChange}
         placeholder={placeholder}
         name={name}
+        value={value}
       />
     </StyledTweetInputContainer>
   );

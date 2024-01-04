@@ -15,7 +15,7 @@ const TabBar = () => {
   const handleClick = async (value: boolean, query: string) => {
     setActiveFirstPage(value);
     dispatch(setQuery(query));
-    const data = await service.getPosts(query).catch((e) => {
+    const data = await service.getPaginatedPosts(5,'', query).catch((e) => {
       console.log(e);
     });
     dispatch(updateFeed(data));
@@ -32,7 +32,7 @@ const TabBar = () => {
         <Tab
           active={!activeFirstPage}
           text={t("header.following")}
-          onClick={() => handleClick(false, "?limit=100")}
+          onClick={() => handleClick(false, "")}
         />
       </StyledTabBarContainer>
     </>

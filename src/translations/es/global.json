@@ -44,7 +44,8 @@
     "confirm-password": "Ambas contraseñas deben coincidir.",
     "username-signup": "Lo siento, el nombre de usuario ya está siendo usado. Por favor cambialo.",
     "email-signup": "Lo siento, este email ya está siendo usado. Por favor cambialo.",
-    "content": "Lo siento, el largo debe ser menor o igual a 240 caracteres."
+    "content": "Lo siento, el largo debe ser menor o igual a 240 caracteres.",
+    "strong-password": "La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial"
   },
   "input-params": {
     "username": "Nombre de usuario",

@@ -16,8 +16,10 @@ import { useAppSelector } from "../../redux/hooks";
 
 interface TweetProps {
   post: Post;
+  lastElementRef?: (node: Element | null) => void;
 }
-const Tweet = ({ post }: TweetProps) => {
+
+const Tweet = ({ post, lastElementRef}: TweetProps) => {
   const [actualPost, setActualPost] = useState<Post>(post);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [showCommentModal, setShowCommentModal] = useState<boolean>(false);
@@ -25,7 +27,6 @@ const Tweet = ({ post }: TweetProps) => {
   const user = useAppSelector((state) => state.user.user);
   const service = useHttpRequestService();
   const navigate = useNavigate();
-
 
   const getCountByType = (type: string): number => {
     return actualPost.reactions.filter((r) => r.type === type).length ?? 0;
@@ -63,7 +64,7 @@ const Tweet = ({ post }: TweetProps) => {
   }, [])
 
   return (
-    <StyledTweetContainer>
+    <StyledTweetContainer ref={lastElementRef} id={post.id}>
       <StyledContainer
         style={{ width: "100%" }}
         flexDirection={"row"}

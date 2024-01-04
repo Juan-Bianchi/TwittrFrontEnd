@@ -74,7 +74,7 @@ After that, you have to create from scratch a button and an input field, and sho
 **Variants**: outlined, fulfilled, ghost & white
 **Size**: small, medium, large
 
-### 8. Infinite Scroll
+### :rocket: 8. Infinite Scroll
 
 The objective of this task is to add an infinite scroller to see tweets on the home screen. This is the way that X (ex twitter) has to load tweets.
 

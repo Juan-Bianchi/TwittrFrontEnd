@@ -34,8 +34,10 @@ const SignUpPage = () => {
         name: Yup.string(),
         username: Yup.string().required(t('error.required-username')),
         email: Yup.string().email(t('error.email')).required(t('error.required-email')),
-        password: Yup.string().required(t('error.required-password')),
-        confirmPassword: Yup.string().required(t('error.required-password')).oneOf([Yup.ref('password'), ''],t('error.confirm-password'))
+        password: Yup.string().required(t('error.required-password'))
+          .matches( /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])/, t('error.strong-password') ),
+        confirmPassword: Yup.string().required(t('error.required-password'))
+          .oneOf([Yup.ref('password'), ''],t('error.confirm-password'))
       }),
     onSubmit: values => handleSubmit(values)
   })
@@ -53,7 +55,11 @@ const SignUpPage = () => {
     if (emailAvailable && usernameAvailable) {
       httpRequestService.signUp(requestData)
             .then(() => navigate("/"))
-            .catch(() => setError(true));
+            .catch(() => {
+              setError(true);
+              setEmailError(false);
+              setUsernameError(false);
+            });
     }
   };
 
