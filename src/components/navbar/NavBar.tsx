@@ -16,9 +16,10 @@ import { StyledIconContainer } from "./IconContainer";
 import { StyledNavItemsContainer } from "./navItem/NavItemsContainer";
 import { StyledP } from "../common/text";
 import { useHttpRequestService } from "../../service/HttpRequestService";
-import { setUser } from "../../redux/user";
+import { setUser, updateHasMorePosts, updatePointer } from "../../redux/user";
 import { MyButtonSize, MyButtonVariant } from "../my-button/StyledMyButton";
 import MyButton from "../my-button/MyButton";
+import { createPortal } from "react-dom";
 
 const NavBar = () => {
   const location = useLocation();
@@ -78,6 +79,8 @@ const NavBar = () => {
           <NavItem
             title={t("navbar.home")}
             onClick={() => {
+              dispatch(updatePointer(''));
+              dispatch(updateHasMorePosts(true));
               navigate("/");
             }}
             icon={IconType.HOME}
@@ -113,12 +116,14 @@ const NavBar = () => {
             }}
           />
         </StyledContainer>
-        <TweetModal
-          open={tweetModalOpen}
-          onClose={() => {
-            setTweetModalOpen(false);
-          }}
-        />
+        {createPortal(
+          <TweetModal
+            open={tweetModalOpen}
+            onClose={() => {
+              setTweetModalOpen(false);
+            }}
+          />, document.body
+        )}
       </StyledContainer>
       <StyledContainer
         flex={1}

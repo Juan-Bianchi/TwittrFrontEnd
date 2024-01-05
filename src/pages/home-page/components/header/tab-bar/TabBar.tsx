@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Tab from "./tab/Tab";
-import { setQuery, updateFeed } from "../../../../../redux/user";
+import { setQuery, updateFeed, updateHasMorePosts, updatePointer } from "../../../../../redux/user";
 import { useHttpRequestService } from "../../../../../service/HttpRequestService";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../../../../redux/hooks";
@@ -15,6 +15,8 @@ const TabBar = () => {
   const handleClick = async (value: boolean, query: string) => {
     setActiveFirstPage(value);
     dispatch(setQuery(query));
+    dispatch(updateHasMorePosts(true));
+    dispatch(updatePointer(''));
     const data = await service.getPaginatedPosts(5,'', query).catch((e) => {
       console.log(e);
     });

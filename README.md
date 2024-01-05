@@ -78,7 +78,7 @@ After that, you have to create from scratch a button and an input field, and sho
 
 The objective of this task is to add an infinite scroller to see tweets on the home screen. This is the way that X (ex twitter) has to load tweets.
 
-### 9. Portals
+### :rocket: 9. Portals
 
 The objective of this task is to enhance the app's modals. To achieve this, you need to master the art of Portals 🕳️. This feature, though not widely known, is useful for injecting components into another location without complexity.
 

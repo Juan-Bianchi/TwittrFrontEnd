@@ -8,6 +8,8 @@ type InitalStateType = {
   query: string;
   length: number;
   currentChat?: ChatDTO;
+  hasMorePosts: boolean;
+  pointer: string;
 };
 
 const initialState: InitalStateType = {
@@ -25,6 +27,8 @@ const initialState: InitalStateType = {
   feed: [],
   length: LIMIT,
   query: "",
+  hasMorePosts: true,
+  pointer: ''
 };
 
 const userSlice = createSlice({
@@ -53,10 +57,17 @@ const userSlice = createSlice({
         state.currentChat.messages.push(action.payload);
       }
     },
+    
+    updatePointer: (state, action) => {
+      state.pointer = action.payload;
+    },
+    updateHasMorePosts: (state, action) => {
+      state.hasMorePosts = action.payload;
+    }
   },
 });
 
-export const { setUser, updateFeed, setLength, setQuery, setChat, addMessage} =
+export const { setUser, updateFeed, setLength, setQuery, setChat, addMessage, updateHasMorePosts,  updatePointer} =
   userSlice.actions;
 
 export default userSlice.reducer;

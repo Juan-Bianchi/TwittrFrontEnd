@@ -13,6 +13,7 @@ import ImageContainer from "./tweet-image/ImageContainer";
 import CommentModal from "../comment/comment-modal/CommentModal";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
+import { createPortal } from "react-dom";
 
 interface TweetProps {
   post: Post;
@@ -82,13 +83,15 @@ const Tweet = ({ post, lastElementRef}: TweetProps) => {
         />
         {post.authorId === user.id && (
           <>
+          {createPortal(
             <DeletePostModal
               show={showDeleteModal}
               id={post.id}
               onClose={() => {
                 setShowDeleteModal(false);
               }}
-            />
+            />, document.body
+          )}
             <ThreeDots
               onClick={() => {
                 setShowDeleteModal(!showDeleteModal);
@@ -108,7 +111,7 @@ const Tweet = ({ post, lastElementRef}: TweetProps) => {
       <StyledReactionsContainer>
         <Reaction
           img={IconType.CHAT}
-          count={actualPost.comments.length}
+          count={post.comments.length}
           reactionFunction={() =>
             window.innerWidth > 600
               ? setShowCommentModal(true)
@@ -135,11 +138,13 @@ const Tweet = ({ post, lastElementRef}: TweetProps) => {
           isAComment={false}
         />
       </StyledReactionsContainer>
+
+      {createPortal(
       <CommentModal
         show={showCommentModal}
         post={post}
         onClose={() => setShowCommentModal(false)}
-      />
+      />, document.body)}
     </StyledTweetContainer>
   );
 };

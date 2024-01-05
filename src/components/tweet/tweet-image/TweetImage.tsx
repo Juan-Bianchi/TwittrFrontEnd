@@ -7,6 +7,7 @@ import {
   StyledOverflowContainer,
 } from "../../common/Container";
 import { StyledRemoveIconContainer } from "./RemoveIconContainer";
+import { createPortal } from "react-dom";
 
 interface TweetImageProps {
   src: string;
@@ -40,12 +41,14 @@ const TweetImage = ({
           onClick={() => setShowModal(true)}
         />
       </StyledOverflowContainer>
-      <ImageModal
-        show={showModal}
-        src={src}
-        alt={alt}
-        onClose={() => setShowModal(false)}
-      />
+      {createPortal(
+        <ImageModal
+          show={showModal}
+          src={src}
+          alt={alt}
+          onClose={() => setShowModal(false)}
+        />, document.body
+      )}
     </StyledContainer>
   );
 };

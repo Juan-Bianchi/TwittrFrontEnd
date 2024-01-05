@@ -5,6 +5,7 @@ import { useHttpRequestService } from "../../service/HttpRequestService";
 import { useTranslation } from "react-i18next";
 import { StyledSearchBarContainer } from "./SearchBarContainer";
 import { StyledSearchBarInput } from "./SearchBarInput";
+import { createPortal } from "react-dom";
 
 export const SearchBar = () => {
   const [results, setResults] = useState<Author[]>([]);
@@ -35,7 +36,9 @@ export const SearchBar = () => {
         value={query}
         placeholder={t("placeholder.search")}
       />
-      <SearchResultModal show={query.length > 0} results={results} />
+      {createPortal(
+        <SearchResultModal show={query.length > 0} results={results} />, document.body
+      )}
     </StyledSearchBarContainer>
   );
 };

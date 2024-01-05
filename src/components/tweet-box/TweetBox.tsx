@@ -65,6 +65,11 @@ const TweetBox = (props: TweetBoxProps) => {
         const comments: Post[] = await httpService.getCommentsByPostId(parentId as string);
         dispatch(updateFeed(comments));
       }
+      if(location.pathname.match('/')) {
+        const posts: Post[] = await httpService.getPaginatedPosts(5, '', query);
+        dispatch(updateFeed(posts));
+        console.log('first')
+      }
       close && close();
     } catch (e) {
       console.log(e);

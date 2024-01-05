@@ -12,6 +12,7 @@ import ProfileFeed from "../../components/feed/ProfileFeed";
 import { StyledContainer } from "../../components/common/Container";
 import { StyledH5 } from "../../components/common/text";
 import Cookies from "universal-cookie";
+import { createPortal } from "react-dom";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<User | null>(null);
@@ -154,22 +155,24 @@ const ProfilePage = () => {
                 <StyledH5>Private account</StyledH5>
               )}
             </StyledContainer>
-            <Modal
-              show={showModal}
-              text={modalValues.text}
-              title={modalValues.title}
-              acceptButton={
-                <Button
-                  buttonType={modalValues.type}
-                  text={modalValues.buttonText}
-                  size={"MEDIUM"}
-                  onClick={handleSubmit}
-                />
-              }
-              onClose={() => {
-                setShowModal(false);
-              }}
-            />
+            {createPortal(
+              <Modal
+                show={showModal}
+                text={modalValues.text}
+                title={modalValues.title}
+                acceptButton={
+                  <Button
+                    buttonType={modalValues.type}
+                    text={modalValues.buttonText}
+                    size={"MEDIUM"}
+                    onClick={handleSubmit}
+                  />
+                }
+                onClose={() => {
+                  setShowModal(false);
+                }}
+              />, document.body
+            )}
           </>
         )}
       </StyledContainer>
