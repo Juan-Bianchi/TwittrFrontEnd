@@ -56,7 +56,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, updateFeed, setLength, setQuery, setChat, addMessage } =
+export const { setUser, updateFeed, setLength, setQuery, setChat, addMessage} =
   userSlice.actions;
 
 export default userSlice.reducer;

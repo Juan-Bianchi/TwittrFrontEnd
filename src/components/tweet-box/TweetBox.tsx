@@ -57,15 +57,13 @@ const TweetBox = (props: TweetBoxProps) => {
       setImages([]);
       setImagesPreview([]);
       dispatch(setLength(length + 1));
-      if(location.pathname === '/' ){
-        const homePosts: Post[] = await httpService.getPosts(query).catch((e) => {
-          console.log(e);
-        });
-        dispatch(updateFeed(homePosts));
-      }
-      else {
+      if(location.pathname.startsWith('/profile/')){
         const profilePosts: Post[] = await httpService.getPostsFromProfile(user.id);
         dispatch(updateFeed(profilePosts));
+      }
+      if(location.pathname.startsWith('/post/')) {
+        const comments: Post[] = await httpService.getCommentsByPostId(parentId as string);
+        dispatch(updateFeed(comments));
       }
       close && close();
     } catch (e) {

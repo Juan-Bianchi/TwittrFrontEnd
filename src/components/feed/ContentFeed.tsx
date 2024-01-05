@@ -6,7 +6,6 @@ const ContentFeed = () => {
   const [pointer, setPointer] = useState('');
   const { posts, loading } = useGetFeed({pointer});
 
-
   const observer = useRef< IntersectionObserver | null >(null);
   const lastPost = useCallback((node: Element | null) => {
     if (loading) return;
