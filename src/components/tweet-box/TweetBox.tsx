@@ -68,7 +68,6 @@ const TweetBox = (props: TweetBoxProps) => {
       if(location.pathname.match('/')) {
         const posts: Post[] = await httpService.getPaginatedPosts(5, '', query);
         dispatch(updateFeed(posts));
-        console.log('first')
       }
       close && close();
     } catch (e) {

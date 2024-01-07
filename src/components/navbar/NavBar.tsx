@@ -96,15 +96,17 @@ const NavBar = () => {
             selectedIcon={IconType.ACTIVE_PROFILE}
             active={location.pathname === `/profile/${user.id}`}
           />
-          <StyledTweetButton
-            onClick={() =>
-              window.innerWidth > 600
-                ? setTweetModalOpen(true)
-                : navigate("/compose/tweet")
-            }
-          >
-            +
-          </StyledTweetButton>
+          {!location.pathname.includes('/chat/') && 
+            <StyledTweetButton
+              onClick={() =>
+                window.innerWidth > 600
+                  ? setTweetModalOpen(true)
+                  : navigate("/compose/tweet")
+              }
+            >
+              +
+            </StyledTweetButton>
+          }
         </StyledNavItemsContainer>
         <StyledContainer width={"100%"}>
         <MyButton

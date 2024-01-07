@@ -1,28 +1,16 @@
 import styled from "styled-components";
+import { MyInputVariant } from "../../../components/my-input/StyledMyInputContainer";
 
-interface MyInputContainerProps {
+interface MyChatInputContainerProps {
   containerVariant: MyInputVariant;
-  containerSize: MyInputSize;
 }
 
-export enum MyInputVariant {
-  OUTLINED = 'OUTLINED',
-  FULFILLED = 'FULFILLED',
-  GHOST = 'GHOST',
-  WHITE = 'WHITE',
-  BLACK = 'BLACK',
-  DANGER = 'DANGER'
-}
 
-export enum MyInputSize {
-  SMALL = 'SMALL',
-  MEDIUM = 'MEDIUM',
-  LARGE = 'LARGE'
-}
-
-export const StyledMyInputContainer = styled.form<MyInputContainerProps>`
+export const StyledMyChatInputContainer = styled.form<MyChatInputContainerProps>`
+  display: flex;
+  justify-items: stretch;
+  align-content: center;
   border-radius: 10px;
-  padding: 8px;
   border: ${(props) =>{
     switch(props.containerVariant){
       case 'FULFILLED':
@@ -38,18 +26,7 @@ export const StyledMyInputContainer = styled.form<MyInputContainerProps>`
     }
   }};
   transition: 0.3s;
-
-  width: ${(props) => {
-    switch (props.containerSize) {
-      case "SMALL": 
-        return props.theme.inputSize.small;
-      case "MEDIUM": 
-        return props.theme.inputSize.medium;
-      case "LARGE": 
-        return props.theme.inputSize.large;
-    }
-  }}
-  };
+  width: 100%;
 
   background: ${(props) =>{
     switch (props.containerVariant) {
@@ -74,13 +51,5 @@ export const StyledMyInputContainer = styled.form<MyInputContainerProps>`
 
   &.error {
     border: 1px solid ${(props) => props.theme.colors.error2};
-  }
-
-  @media (min-width: 600px) {
-    width: ${(props)=> props.theme.inputSize.large};
-
-    &.active-div {
-      scale: 1.05
-    }
   }
 `;

@@ -84,6 +84,6 @@ The objective of this task is to enhance the app's modals. To achieve this, you 
 
 **Why is it important?** Sometimes, we need to develop features that must bypass the hierarchical structure of the app (e.g., dropdowns, filters, modals, tooltips, menus, etc.). React Portal is a feature that enables us to achieve this type of behavior.
 
-### 10. Let’s chat
+### :rocket: 10. Let’s chat
 
 The objective of this task is to add functionality to chat with someone. You have already done the backend job, now is the time to apply it to the Frontend. Create a service to add the sockets that you will use.

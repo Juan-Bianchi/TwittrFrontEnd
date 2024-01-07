@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { StyledContainer } from "../../components/common/Container";
 import Tweet from "../../components/tweet/Tweet";
 import Loader from "../../components/loader/Loader";
-import { HttpService } from "../../service/HttpRequestService";
 import TweetBox from "../../components/tweet-box/TweetBox";
 import { StyledH5 } from "../../components/common/text";
 import { StyledFeedContainer } from "../home-page/components/contentContainer/FeedContainer";
 import CommentFeed from "../../components/feed/CommentFeed";
 import { Post } from "../../service";
 import { useLocation } from "react-router-dom";
+import { useHttpRequestService } from "../../service/HttpRequestService";
 
 const PostPage = () => {
   const location = useLocation();
-  const service = new HttpService().service;
+  const service = useHttpRequestService()
   const postId = location.pathname.split("/")[2];
   const [post, setPost] = useState<Post | null>(null)
 
@@ -23,7 +23,7 @@ const PostPage = () => {
 
   const fetchPost = (postId: string)=> {
     service.getPostById(postId)
-      .then((res) => {
+      .then((res: Post) => {
         setPost(res)
       })
       .catch((e) => {

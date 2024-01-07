@@ -1,11 +1,10 @@
 import type { PostData, SingInData, SingUpData } from "./index";
 import { S3Service } from "./S3Service";
-import Cookies from "universal-cookie";
 import axiosClient from "./axios/AxiosClient";
 import axios from "axios";
+import cookie from "./Cookie";
 
 const url = process.env.REACT_APP_API_URL || "https://twitter-ieea.onrender.com/api";
-const cookie = new Cookies();
 
 const httpRequestService = {
 
@@ -256,9 +255,4 @@ const httpRequestService = {
 
 const useHttpRequestService = () => httpRequestService;
 
-// For class component (remove when unused)
-class HttpService {
-  service = httpRequestService;
-}
-
-export { useHttpRequestService, HttpService };
+export { useHttpRequestService };

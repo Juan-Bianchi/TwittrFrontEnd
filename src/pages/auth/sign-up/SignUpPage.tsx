@@ -37,7 +37,7 @@ const SignUpPage = () => {
         password: Yup.string().required(t('error.required-password'))
           .matches( /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])/, t('error.strong-password') ),
         confirmPassword: Yup.string().required(t('error.required-password'))
-          .oneOf([Yup.ref('password'), ''],t('error.confirm-password'))
+        .oneOf([Yup.ref('password'), ''],t('error.confirm-password'))
       }),
     onSubmit: values => handleSubmit(values)
   })

@@ -13,10 +13,13 @@ import { StyledContainer } from "../../components/common/Container";
 import { StyledH5 } from "../../components/common/text";
 import Cookies from "universal-cookie";
 import { createPortal } from "react-dom";
+import MyButton from "../../components/my-button/MyButton";
+import { MyButtonSize, MyButtonVariant } from "../../components/my-button/StyledMyButton";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<User | null>(null);
   const [following, setFollowing] = useState<boolean>(false);
+  const [follower, setFollower] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalValues, setModalValues] = useState({
     text: "",
@@ -93,13 +96,18 @@ const ProfilePage = () => {
   const getProfileData = async () => {
     service
       .getProfile(id)
-      .then((res) => {
+      .then((res: User) => {
         setProfile(res);
         setFollowing(
           res
             ? res?.followers.some((follow: Follow) => follow.followerId === user.id && !follow.deletedAt)
             : false
         );
+        setFollower(
+          res
+            ? user.follows.some((follow: Follow) => follow.followedId === res.id && !follow.deletedAt)
+            : false
+        )
       })
       .catch(() => {
         service
@@ -140,12 +148,22 @@ const ProfilePage = () => {
                   username={profile!.username}
                   profilePicture={profile!.profilePicture}
                 />
-                <Button
-                  buttonType={handleButtonType().component}
-                  size={"100px"}
-                  onClick={handleButtonAction}
-                  text={handleButtonType().text}
-                />
+                <div >
+                  <Button
+                    buttonType={handleButtonType().component}
+                    size={"95px"}
+                    onClick={handleButtonAction}
+                    text={handleButtonType().text}
+                  />
+                  {follower && following &&
+                    <MyButton
+                      buttonVariant={MyButtonVariant.BLACK}
+                      buttonSize={MyButtonSize.SMALL}
+                      onClick={()=> navigate(`/chat/${user.id}/${profile.id}`)}
+                      text={'Chat'}
+                    />
+                  }
+                </div>
               </StyledContainer>
             </StyledContainer>
             <StyledContainer width={"100%"}>

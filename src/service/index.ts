@@ -82,3 +82,9 @@ export interface Follow {
   deletedAt: Date;
   updatedAt: Date;
 }
+
+export interface Message {
+  body: string,
+  from: string,
+  to: string,
+}
