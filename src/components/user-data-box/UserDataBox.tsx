@@ -27,7 +27,7 @@ export const UserDataBox = ({
       <Avatar
         width={"48px"}
         height={"48px"}
-        src={profilePicture ?? icon}
+        src={profilePicture && profilePicture.startsWith('ht') ? profilePicture : icon}
         onClick={() => onClick ?? navigate(`/profile/${id}`)}
         alt={name ?? "Name"}
       />

@@ -5,7 +5,6 @@ import { io } from "socket.io-client";
 
 const cookieName: string  = process.env.REACT_APP_COOKIE_NAME as string
 const token = cookie.get(cookieName) as string
-console.log(token)
 const socket = io('http://localhost:8080', {
     auth: {
         token: token,

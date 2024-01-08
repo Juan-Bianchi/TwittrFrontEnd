@@ -15,7 +15,7 @@ export const SearchResultModal = ({
   return (
     <>
       {show && (
-        <StyledContainer style={{ width: "100%" }}>
+        <StyledContainer style={{ width: "100%" }} >
           <StyledSearchResultModalContainer>
             {(results.length === 0 && <div>No results</div>) ||
               results.map((author) => {

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { updatePointer } from "../../redux/user";
 
 const ContentFeed = () => {
-  const [_after, setAfter] = useState('');
+  const [, setAfter] = useState('');
   const pointer = useAppSelector((state)=> state.user.pointer);
   const { posts, loading } = useGetFeed();
   const dispatch = useDispatch();

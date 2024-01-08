@@ -17,7 +17,6 @@ export const useGetFeed = () => {
 
   const service = useHttpRequestService();
 
-
   useEffect(() => {
     if(hasMorePosts){
       try {

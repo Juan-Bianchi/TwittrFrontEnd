@@ -1,4 +1,3 @@
-import React from "react";
 import { StyledAvatarContainer } from "./AvatarContainer";
 import NameImage from "./NameImage";
 
@@ -11,6 +10,7 @@ interface AvatarProps {
 }
 
 const Avatar = ({ src, alt, onClick, width, height }: AvatarProps) => {
+
   return (
     <StyledAvatarContainer onClick={onClick} width={width} height={height}>
       {src !== null ? <img src={src} alt={alt} /> : <NameImage name={alt} />}

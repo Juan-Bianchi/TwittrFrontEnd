@@ -36,9 +36,7 @@ export const SearchBar = () => {
         value={query}
         placeholder={t("placeholder.search")}
       />
-      {createPortal(
-        <SearchResultModal show={query.length > 0} results={results} />, document.body
-      )}
+      <SearchResultModal show={query.length > 0} results={results} />
     </StyledSearchBarContainer>
   );
 };

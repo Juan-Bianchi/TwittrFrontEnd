@@ -8,9 +8,19 @@ const url = process.env.REACT_APP_API_URL || "https://twitter-ieea.onrender.com/
 
 const httpRequestService = {
 
+  getAvatarUrl: async (name: string)=> {
+    const res = await axiosClient.get(`${url}/user/getSignedURL`, {
+      params: {
+        name
+      },
+    });
+    if(res.status === 200) {
+      return res.data;
+    }
+  },
   routingAuth: async () => {
-      const res = await axiosClient.post(`${url}/auth/validate`, null)
-      return res.status === 200 ? { isValidToken: true } : { isValidToken: false }
+    const res = await axiosClient.post(`${url}/auth/validate`, null)
+    return res.status === 200 ? { isValidToken: true } : { isValidToken: false }
   },
   checkUser: async (email?: string, username?:string)=> {
     const res = await axios.get(`${url}/auth/checkUser`, {
@@ -183,32 +193,8 @@ const httpRequestService = {
     }
   },
 
-  getChats: async () => {
-    const res = await axiosClient.get(`${url}/chat`);
-
-    if (res.status === 200) {
-      return res.data;
-    }
-  },
-
   getMutualFollows: async () => {
     const res = await axiosClient.get(`${url}/follow/mutual`);
-
-    if (res.status === 200) {
-      return res.data;
-    }
-  },
-
-  createChat: async (id: string) => {
-    const res = await axiosClient.post(`${url}/chat`,{ users: [id],});
-
-    if (res.status === 201) {
-      return res.data;
-    }
-  },
-
-  getChat: async (id: string) => {
-    const res = await axiosClient.get(`${url}/chat/${id}`);
 
     if (res.status === 200) {
       return res.data;

@@ -62,7 +62,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    getProfileData().then();
+    getProfileData();
   }, [id]);
 
   if (!id) return null;
@@ -94,32 +94,34 @@ const ProfilePage = () => {
   };
 
   const getProfileData = async () => {
-    service
-      .getProfile(id)
-      .then((res: User) => {
-        setProfile(res);
-        setFollowing(
-          res
-            ? res?.followers.some((follow: Follow) => follow.followerId === user.id && !follow.deletedAt)
-            : false
-        );
-        setFollower(
-          res
-            ? user.follows.some((follow: Follow) => follow.followedId === res.id && !follow.deletedAt)
-            : false
-        )
-      })
-      .catch(() => {
-        service
-          .getProfileView(id)
-          .then((res) => {
-            setProfile(res);
-            setFollowing(false);
-          })
-          .catch((error2) => {
-            console.log(error2);
-          });
-      });
+    try{
+      const profResponse: User = await service.getProfile(id);
+      if(profResponse.profilePicture) {
+        const avatarUrl: string = await service.getAvatarUrl(profResponse.profilePicture)
+        profResponse.profilePicture = avatarUrl;
+      }
+      setProfile(profResponse);
+      setFollowing(
+        profResponse
+          ? profResponse?.followers.some((follow: Follow) => follow.followerId === user.id && !follow.deletedAt)
+          : false
+      );
+      setFollower(
+        profResponse
+          ? user.follows.some((follow: Follow) => follow.followedId === profResponse.id && !follow.deletedAt)
+          : false
+      )
+    }
+    catch(e) {
+      service.getProfileView(id)
+        .then((res) => {
+          setProfile(res);
+          setFollowing(false);
+        })
+        .catch((error2) => {
+          console.log(error2);
+        });
+    };
   };
 
   return (
@@ -168,7 +170,7 @@ const ProfilePage = () => {
             </StyledContainer>
             <StyledContainer width={"100%"}>
               {profile.followers ? (
-                <ProfileFeed />
+                <ProfileFeed profilePicture={profile.profilePicture}/>
               ) : (
                 <StyledH5>Private account</StyledH5>
               )}

@@ -15,7 +15,7 @@ const Header = () => {
     <>
       <StyledHeaderContainer>
         <div className="title-container">
-          <img src={user.profilePicture ?? icon} className="icon" alt="Icon" />
+          <img src={user.profilePicture && user.profilePicture.startsWith('ht') ? user.profilePicture : icon} className="icon" alt="Icon" />
           <img src={logo} className="logo" alt="Logo" />
           <h5>{t("header.home")}</h5>
         </div>

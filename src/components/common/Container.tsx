@@ -14,7 +14,8 @@ const ContainerBase = styled.div`
   position: relative;
   scrollbar-width: auto;
   border-radius: 0;
-  min-height: auto;
+  min-height: aut
+  ;
   min-width: 0;
   width: 100%;
 `;
@@ -33,17 +34,12 @@ export const StyledContainer = styled(ContainerBase).attrs<ContainerProps>(
       `}
   }
 `;
-// TODO add hoverablecontainer
 
-// Example usage:
-// <StyledContainer
-//   hoverable
-//   maxWidth="600px"
-//   justifyContent="center"
-//   // Add more CSS properties as needed
-// >
-//   Content
-// </StyledContainer>
+export const StyledHoverableCointainer = styled(StyledContainer)`
+  cursor: pointer;
+  justify-content: center;
+  align-items: start;
+`
 
 export const StyledScrollableContainer = styled(StyledContainer)`
   scrollbar-width: none;

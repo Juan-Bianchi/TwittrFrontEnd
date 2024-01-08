@@ -6,7 +6,7 @@ import { StyledReactionsContainer } from "./ReactionsContainer";
 import Reaction from "./reaction/Reaction";
 import { useHttpRequestService } from "../../service/HttpRequestService";
 import { IconType } from "../icon/Icon";
-import { StyledContainer } from "../common/Container";
+import { StyledContainer, StyledHoverableCointainer } from "../common/Container";
 import ThreeDots from "../common/ThreeDots";
 import DeletePostModal from "./delete-post-modal/DeletePostModal";
 import ImageContainer from "./tweet-image/ImageContainer";
@@ -100,9 +100,9 @@ const Tweet = ({ post, lastElementRef}: TweetProps) => {
           </>
         )}
       </StyledContainer>
-      <StyledContainer onClick={() => navigate(`/post/${post.id}`)}>
+      <StyledHoverableCointainer onClick={() => navigate(`/post/${post.id}`)}>
         <p>{post.content}</p>
-      </StyledContainer>
+      </StyledHoverableCointainer>
       {post.images && post.images!.length > 0 && (
         <StyledContainer padding={"0 0 0 10%"}>
           <ImageContainer images={post.images} />

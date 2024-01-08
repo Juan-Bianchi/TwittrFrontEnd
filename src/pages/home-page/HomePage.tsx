@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SuggestionBox from "./components/suggestionBox/SuggestionBox";
 import ContentContainer from "./components/contentContainer/ContentContainer";
-import { setUser, updateFeed } from "../../redux/user";
+import { setUser } from "../../redux/user";
 import { useHttpRequestService } from "../../service/HttpRequestService";
 import { SearchBar } from "../../components/search-bar/SearchBar";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,10 @@ const HomePage = () => {
   const handleSetUser = async () => {
     try {
       const user: User = await service.me();
+      if(user.profilePicture && !user.profilePicture.startsWith('ht')) {
+        const avatarUrl: string = await service.getAvatarUrl(user.profilePicture)
+        user.profilePicture = avatarUrl;
+      } 
       dispatch(setUser(user));
       setIsLoading(false)
     } catch (e) {

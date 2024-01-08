@@ -52,6 +52,11 @@ const NavBar = () => {
   const handleSetUser = async ()=> {
     try {
       const userReloaded = await service.me();
+      if(user.profilePicture && !user.profilePicture.startsWith('ht')) {
+        const avatarUrl: string = await service.getAvatarUrl(user.profilePicture)
+        user.profilePicture = avatarUrl;
+        console.log(user.profilePicture)
+      }
       dispatch(setUser(userReloaded));
     }
     catch(e) {
@@ -134,6 +139,10 @@ const NavBar = () => {
         gap={"8px"}
         alignItems={"center"}
         ref={promptRef}
+        position={"fixed"}
+        top={"92%"}
+        left={"17%"}
+        width={"auto"}
       >
         <LogoutPrompt show={logoutOpen} />
         <Avatar
