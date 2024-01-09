@@ -34,14 +34,14 @@ const httpRequestService = {
   signUp: async (data: Partial<SingUpData>) => {
     const res = await axios.post(`${url}/auth/signup`, data);
     if (res.status === 201) {
-      cookie.set('twittrToken', `Bearer ${res.data.token}`, {path: '/', maxAge: 3600})
+      cookie.setToken(res);
       return true;
     }
   },
   signIn: async (data: SingInData) => {
     const res = await axios.post(`${url}/auth/login`, data);
     if (res.status === 200) {
-      cookie.set('twittrToken', `Bearer ${res.data.token}`, {path: '/', maxAge: 3600})
+      cookie.setToken(res)
       return true;
     }
   },

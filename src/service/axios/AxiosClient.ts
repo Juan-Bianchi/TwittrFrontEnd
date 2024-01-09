@@ -1,15 +1,12 @@
 import axios, { AxiosInstance } from "axios";
 import requestInterceptor from "./interceptors/RequestInterceptor";
 import responseInterceptor from "./interceptors/ResponseInterceptor";
-import cookie from "../Cookie";
 
 const axiosClient: AxiosInstance = axios.create({
   baseURL:  process.env.REACT_APP_API_URL || "https://twitter-ieea.onrender.com/api"
 });
 
-const cookieName: string  = process.env.REACT_APP_COOKIE_NAME as string
-
-requestInterceptor(axiosClient, cookie, cookieName);
+requestInterceptor(axiosClient);
 responseInterceptor(axiosClient);
 
 export default axiosClient;

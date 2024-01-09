@@ -6,13 +6,21 @@ import ChatInput from "./components/ChatInput"
 import { useFormik } from "formik"
 import * as Yup from 'yup';
 import { MyInputVariant } from "../../components/my-input/StyledMyInputContainer"
+import { io } from "socket.io-client"
+import cookie from "../../service/Cookie"
 
 
 const ChatPage = () => {
 
   const to = useParams().contactId as string;
   const from = useParams().userId as string;
-  const { messages, sendMessage } = useSocket({from, to})
+  const token = cookie.getToken()
+  const socket = io('http://localhost:8080', {
+      auth: {
+          token: token,
+      },
+  })
+  const { messages, sendMessage } = useSocket({from, to, socket})
   const formik = useFormik({
     initialValues: {message: ''},
     validationSchema: 

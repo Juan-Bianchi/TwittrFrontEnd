@@ -1,21 +1,24 @@
 import { AxiosInstance } from "axios";
+import cookie from "../../Cookie";
+
 
 
 const responseInterceptor = (axiosInstance: AxiosInstance)=> {
   axiosInstance.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response && error.response.status === 401) {
-      window.location.href = `/sign-in`;
-      return new Promise(() => {})
+    response => response,
+    error => {
+      if (error.response && error.response.status === 401) {
+        cookie.removeToken();
+        window.location.href = `/sign-in`;
+        return new Promise(() => {});
+      }
+      console.log(error);
+      
+      return {
+        isValidToken: false
+      }
     }
-    console.log(error);
-    
-    return {
-      isValidToken: false
-    }
-  },
-  {synchronous:true})
+  )
 }
 
 export default responseInterceptor;

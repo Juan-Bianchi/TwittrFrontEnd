@@ -11,10 +11,12 @@ import Button from "../../components/button/Button";
 import ProfileFeed from "../../components/feed/ProfileFeed";
 import { StyledContainer } from "../../components/common/Container";
 import { StyledH5 } from "../../components/common/text";
-import Cookies from "universal-cookie";
 import { createPortal } from "react-dom";
 import MyButton from "../../components/my-button/MyButton";
 import { MyButtonSize, MyButtonVariant } from "../../components/my-button/StyledMyButton";
+import { useDispatch } from "react-redux";
+import { updateHasMorePosts, updatePointer } from "../../redux/user";
+import cookie from "../../service/Cookie";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<User | null>(null);
@@ -29,11 +31,11 @@ const ProfilePage = () => {
   });
 
   const user = useAppSelector((state) => state.user.user);
+  const dispatch = useDispatch()
 
   const id = useParams().id;
   const service = useHttpRequestService();
   const navigate = useNavigate();
-  const cookie = new Cookies()
 
   const { t } = useTranslation();
 
@@ -47,10 +49,12 @@ const ProfilePage = () => {
 
   const handleSubmit = () => {
     if (profile?.id === user.id) {
-      const cookieName = process.env.REACT_APP_COOKIE_NAME as string
       service.deleteProfile().then(() => {
-        cookie.remove(cookieName)
-        navigate("/sign-in");
+        dispatch(updateHasMorePosts(true));
+        dispatch(updatePointer(''));
+        
+        cookie.removeToken();
+        window.location.href = `/sign-in`;
       });
     } else {
       service.unfollowUser(profile!.id).then(async () => {

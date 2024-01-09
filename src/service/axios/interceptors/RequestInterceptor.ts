@@ -1,13 +1,13 @@
 import { AxiosInstance } from "axios";
-import Cookies from "universal-cookie";
+import cookie from "../../Cookie";
 
-const requestInterceptor = (axiosInstance: AxiosInstance, cookie: Cookies, cookieName: string)=> {
+const requestInterceptor = (axiosInstance: AxiosInstance)=> {
   axiosInstance.interceptors.request.use((config)=> {
-    const jwtToken = cookie.get(cookieName);
+    const jwtToken = cookie.getToken();
     config.headers["Authorization"] = jwtToken;
 
     return config;
-  }, error => Promise.reject(error), {synchronous:true})
+  }, error => Promise.reject(error))
 }
 
 export default requestInterceptor;

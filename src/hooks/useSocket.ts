@@ -1,28 +1,19 @@
 import { useEffect, useState } from "react";
 import { Message } from "../service";
-import cookie from "../service/Cookie";
-import { io } from "socket.io-client";
-
-const cookieName: string  = process.env.REACT_APP_COOKIE_NAME as string
-const token = cookie.get(cookieName) as string
-const socket = io('http://localhost:8080', {
-    auth: {
-        token: token,
-    },
-    autoConnect: false
-})
+import { Socket } from "socket.io-client";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
 interface useSocketProps {
   from: string;
   to: string;
+  socket: Socket<DefaultEventsMap, DefaultEventsMap>
 }
 
-export const useSocket = ({from, to}: useSocketProps)=> {
+export const useSocket = ({from, to, socket}: useSocketProps)=> {
   const [messages, setMessages] = useState<Message[]>([]);
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    socket.connect();
     
     socket.on('connect', () => {
         console.log(socket.connected);
@@ -73,7 +64,6 @@ export const useSocket = ({from, to}: useSocketProps)=> {
         socket.off('allMessages');
         socket.off('connect')
         socket.off('connect_error')
-        socket.disconnect()
     };
   }, []);
 
@@ -87,9 +77,7 @@ export const useSocket = ({from, to}: useSocketProps)=> {
 
   return {
     messages,
-    errors,
-    setErrors,
     sendMessage,
-    setMessages,
+    socket
   }
 }

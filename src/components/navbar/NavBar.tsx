@@ -99,7 +99,7 @@ const NavBar = () => {
             }}
             icon={IconType.PROFILE}
             selectedIcon={IconType.ACTIVE_PROFILE}
-            active={location.pathname === `/profile/${user.id}`}
+            active={location.pathname === `/profile/${user?.id}`}
           />
           {!location.pathname.includes('/chat/') && 
             <StyledTweetButton
@@ -141,12 +141,12 @@ const NavBar = () => {
         ref={promptRef}
         position={"fixed"}
         top={"92%"}
-        left={"17%"}
+        left={"15%"}
         width={"auto"}
       >
         <LogoutPrompt show={logoutOpen} />
         <Avatar
-          src={user.profilePicture ?? Icon}
+          src={user?.profilePicture ?? Icon}
           onClick={handleAvatarClick}
           alt={user?.name ?? ""}
         />
@@ -157,8 +157,8 @@ const NavBar = () => {
           alignItems={"center"}
         >
           <StyledContainer padding={"4px 0"} gap={"4px"}>
-            <StyledP primary>{user.name}</StyledP>
-            <StyledP primary={false}>{`@${user.username}`}</StyledP>
+            <StyledP primary>{user?.name}</StyledP>
+            <StyledP primary={false}>{`@${user?.username}`}</StyledP>
           </StyledContainer>
           <ThreeDots onClick={handleLogout} />
         </StyledContainer>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Modal from "../../modal/Modal";
 import logo from "../../../assets/logo.png";
 import Button from "../../button/Button";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SwitchButton from "../../switch/SwitchButton";
 import { ButtonType } from "../../button/StyledButton";
@@ -10,10 +9,10 @@ import { useAppSelector } from "../../../redux/hooks";
 import { StyledPromptContainer } from "./PromptContainer";
 import { StyledContainer } from "../../common/Container";
 import { StyledP } from "../../common/text";
-import Cookies from "universal-cookie";
 import { createPortal } from "react-dom";
 import { useDispatch } from "react-redux";
 import { updateHasMorePosts, updatePointer } from "../../../redux/user";
+import cookie from "../../../service/Cookie";
 
 interface LogoutPromptProps {
   show: boolean;
@@ -23,8 +22,6 @@ const LogoutPrompt = ({ show }: LogoutPromptProps) => {
   const [showPrompt, setShowPrompt] = useState<boolean>(show);
   const [showModal, setShowModal] = useState<boolean>(false);
   const user = useAppSelector((state) => state.user.user);
-  const cookie = new Cookies()
-  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
@@ -41,11 +38,11 @@ const LogoutPrompt = ({ show }: LogoutPromptProps) => {
   };
 
   const handleLogout = () => {
-    const cookieName = process.env.REACT_APP_COOKIE_NAME as string;
-    cookie.remove(cookieName);
-    dispatch(updatePointer(''));
     dispatch(updateHasMorePosts(true));
-    navigate("/sign-in");
+    dispatch(updatePointer(''));
+    
+    cookie.removeToken();
+    window.location.href = `/sign-in`;
   };
 
   useEffect(() => {

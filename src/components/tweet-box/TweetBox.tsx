@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import MyButton from "../my-button/MyButton";
 import { MyButtonSize, MyButtonVariant } from "../my-button/StyledMyButton";
+import { AnyAction, Dispatch } from "redux";
 
 interface TweetBoxProps {
   parentId?: string;
@@ -33,7 +34,7 @@ const TweetBox = (props: TweetBoxProps) => {
 
   const { user, length, query } = useAppSelector((state) => state.user);
   const httpService = useHttpRequestService();
-  const dispatch = useDispatch();
+  const dispatch: Dispatch<AnyAction> = useDispatch();
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {content: ''},
@@ -43,11 +44,11 @@ const TweetBox = (props: TweetBoxProps) => {
     onSubmit: values => handleSubmit(values.content)
   })
 
-  const handleSubmit = async (content: string) => {
+  const handleSubmit = async (content: string): Promise<void> => {
     try {
       if(parentId){
-        const postData: PostData = !images.length? {postCommentedId: parentId, content: content} : {postCommentedId: parentId, content: content, images: images}
-        await httpService.createComment(postData)
+        const commentData: PostData = !images.length? {postCommentedId: parentId, content: content} : {postCommentedId: parentId, content: content, images: images}
+        await httpService.createComment(commentData)
       }
       else {
         const postData: PostData = !images.length? {content: content} : {content: content, images: images}
@@ -57,12 +58,12 @@ const TweetBox = (props: TweetBoxProps) => {
       setImages([]);
       setImagesPreview([]);
       dispatch(setLength(length + 1));
-      if(location.pathname.startsWith('/profile/')){
+      if(location.pathname.startsWith('/profile/')) {
         const profilePosts: Post[] = await httpService.getPostsFromProfile(user.id);
         dispatch(updateFeed(profilePosts));
       }
-      if(location.pathname.startsWith('/post/')) {
-        const comments: Post[] = await httpService.getCommentsByPostId(parentId as string);
+      if(location.pathname.startsWith('/post/') && parentId) {
+        const comments: Post[] = await httpService.getCommentsByPostId(parentId);
         dispatch(updateFeed(comments));
       }
       if(location.pathname.match('/')) {
@@ -75,16 +76,16 @@ const TweetBox = (props: TweetBoxProps) => {
     }
   };
 
-  const handleRemoveImage = (index: number) => {
-    const newImages: File[] = images.filter((i, idx) => idx !== index);
-    const newImagesPreview: string[] = newImages.map((i) => URL.createObjectURL(i));
+  const handleRemoveImage = (index: number): void => {
+    const newImages: File[] = images.filter((i: File, idx: number) => idx !== index);
+    const newImagesPreview: string[] = newImages.map((i: File) => URL.createObjectURL(i));
     setImages(newImages);
     setImagesPreview(newImagesPreview);
   };
 
-  const handleAddImage = (newImages: File[]) => {
+  const handleAddImage = (newImages: File[]): void => {
     setImages(newImages);
-    const newImagesPreview = newImages.map((i) => URL.createObjectURL(i));
+    const newImagesPreview: string[] = newImages.map((i: File) => URL.createObjectURL(i));
     setImagesPreview(newImagesPreview);
   };
 

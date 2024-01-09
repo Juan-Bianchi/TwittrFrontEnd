@@ -52,16 +52,16 @@ const Tweet = ({ post, lastElementRef}: TweetProps) => {
     );
   };
 
-  const handleClickOutsideLogoutPrompt = (event: MouseEvent)=> {
+  const handleClickOutsideDeletePrompt = (event: MouseEvent)=> {
     if(deleteModalRef.current && !deleteModalRef.current.contains(event.target as Node)) {
       setShowDeleteModal(false)
     }
   }
 
   useEffect(()=> {
-    document.addEventListener('click', handleClickOutsideLogoutPrompt);
+    document.addEventListener('click', handleClickOutsideDeletePrompt);
 
-    return ()=> document.removeEventListener('click', handleClickOutsideLogoutPrompt)
+    return ()=> document.removeEventListener('click', handleClickOutsideDeletePrompt)
   }, [])
 
   return (
@@ -83,15 +83,13 @@ const Tweet = ({ post, lastElementRef}: TweetProps) => {
         />
         {post.authorId === user.id && (
           <>
-          {createPortal(
             <DeletePostModal
               show={showDeleteModal}
               id={post.id}
               onClose={() => {
                 setShowDeleteModal(false);
               }}
-            />, document.body
-          )}
+            />
             <ThreeDots
               onClick={() => {
                 setShowDeleteModal(!showDeleteModal);
